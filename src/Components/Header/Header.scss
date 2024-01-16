@@ -1,0 +1,108 @@
+#terus-client .terus-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100px;
+  background-color: transparent;
+}
+
+#terus-client .terus-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#terus-client .terus-logo {
+  width: 160px;
+  object-fit: cover;
+}
+
+#terus-client .terus-account i {
+  color: #ccc;
+  font-size: 30px;  
+  padding-right: 52px;
+}
+
+#terus-client .terus-account {
+  position: relative;
+  line-height: 40px;
+}
+
+#terus-client .terus-account::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: #fff;
+  transform: rotate(45deg);
+  z-index: 0;
+  left: 6px;
+  bottom: -20px;
+  visibility: hidden;
+}
+
+#terus-client .terus-notification i {
+  color: #ccc;
+  font-size: 20px;  
+  padding-right: 18px;
+  cursor: pointer;
+}
+
+#terus-client .terus-nav :hover  {
+  color: #bfa40a ;
+}
+
+#terus-account__sub-menu {
+  display: none;
+  list-style-type: none;
+  padding: 12px 0;
+  position: absolute;
+  z-index: 1;
+  top: 30px;
+  background-color: #fff;
+  right: 24px;
+  width: 150px;
+}
+
+#terus-client .terus-account:hover::after {
+  visibility: visible;
+  transition: visibility .3s ease .3s;
+}
+
+#terus-client .terus-account:hover #terus-account__sub-menu {
+  display: block;
+  animation: reveal .4s ease;
+}
+
+@keyframes reveal {
+  from {
+    transform: translateY(80%);
+  }
+  to{
+    transform: translateY(0);
+  }
+}
+
+.terus-account__sub-item {
+  padding: 5px 25px;
+  transition: background-color .3s ease;
+}
+
+.terus-account__sub-item:hover {
+  background-color: #555;
+  transition: background-color .3s ease;
+}
+
+.terus-account__sub-item .terus-account__link {
+  text-decoration: none;
+  color: #000
+}
+
+.terus-account__sub-item .terus-account__link {
+  text-decoration: none;
+  color: #000
+}
+
+.terus-account__sub-item .terus-account__link:hover {
+  color: #000 !important;
+}

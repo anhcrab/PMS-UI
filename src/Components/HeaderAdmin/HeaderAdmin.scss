@@ -1,0 +1,79 @@
+#terus-admin .terus-header {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  // box-shadow: 1px 1px 10px #444;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#terus-admin .terus-left {
+  width: 12%;
+  height: 100%;
+  background-color: #24262d;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 0 15px;
+  color: #fff;
+  transition: width .3s ease;
+  box-shadow: 1px 1px #ddd;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+}
+
+#terus-admin .terus-left h1 {
+  text-transform: uppercase;
+  font-size: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#terus-admin .terus-left .terus-heading__sub {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+#terus-admin .terus-right {
+  width: 88%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 30px;
+  transition: width .3s ease;
+}
+
+.terus-right .terus-header-search__container {
+
+}
+
+#terus_search {
+  position: relative;
+}
+
+#terus_search i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+}
+
+#terus_search input {
+  border: 0.87px solid #ddd;
+  border-radius: 25px;
+  outline: none;
+  background-color: #f2f2f2;
+  height: 40px;
+  padding: 0 10px;
+  color: #333;
+  padding-left: 50px;
+  width: 350px;
+}

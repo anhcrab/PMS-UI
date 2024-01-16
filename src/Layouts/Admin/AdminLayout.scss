@@ -1,0 +1,35 @@
+#terus-admin {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-color);
+}
+
+#terus-admin__top {
+  width: 100%;
+  height: 70px;
+}
+
+#terus-admin__body {
+  width: 100%;
+  height: calc(100% - 50px);
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+}
+
+#terus-admin__body-sidebar {
+  width: 12%;
+  background-color: var(--sidebar-color);
+  transition: width .3s ease;
+}
+
+#terus-admin__body-main {
+  width: 88%;
+  color: var(--dark-text-color);
+  position: relative;
+}
+
+#terus-admin :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--dark-heading-color);
+}

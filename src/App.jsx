@@ -1,7 +1,7 @@
 import FullPage from "./Pages/FullPage"
 
 function App() {
-  return <FullPage />
+  return <FullPage/>
 }
 
 export default App

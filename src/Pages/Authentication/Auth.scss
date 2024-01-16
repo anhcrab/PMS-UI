@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+:root {
+  --highlight-color-1: #bfa40a;
+  --highlight-color-2: #ffe550;
+}
+
+.highlight-1:hover {
+  color: var(--highlight-color-1);
+}
+
+.highlight-2:hover {
+  color: var(--highlight-color-2);
+}
+
+.terus-client__content {
+  background-color: #c9d6ff;
+  background: linear-gradient(to right, #888, #111);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.terus-container {
+  background-color: #fff;
+  // border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+  width: 768px;
+  max-width: 100%;
+  min-height: 480px;
+}
+
+.terus-container p {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+  margin: 20px 0;
+}
+
+.terus-container span {
+  font-size: 12px;
+}
+
+.terus-container a {
+  color: #333;
+  font-size: 13px;
+  text-decoration: none;
+  margin: 15px 0 10px;
+}
+
+.terus-container button {
+  // background-color: #512da8;
+  background-color: #aaa;
+  color: #fff;
+  font-size: 12px;
+  padding: 10px 45px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.terus-container button.hidden {
+  background-color: transparent;
+  transition: color .3s ease;
+  border-radius: 7px;
+}
+
+.terus-container button.hidden.highlight-1 {
+  border-color: var(--highlight-color-1);
+}
+
+.terus-container button.hidden.highlight-2 {
+  border-color: var(--highlight-color-2);
+}
+
+.terus-container button.hidden:hover {
+  transition: color .3s ease;
+}
+
+.terus-container form {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 40px;
+  height: 100%;
+}
+
+.terus-container input {
+  background-color: #eee;
+  border: none;
+  margin: 8px 0;
+  padding: 10px 15px;
+  font-size: 13px;
+  border-radius: 8px;
+  width: 100%;
+  outline: none;
+}
+
+.terus-form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+}
+
+.sign-in {
+  left: 0;
+  width: 50%;
+  z-index: 2;
+}
+
+.terus-container.active .sign-in {
+  transform: translateX(100%);
+}
+
+.sign-up {
+  left: 0;
+  width: 50%;
+  opacity: 0;
+  z-index: 1;
+}
+
+.terus-container.active .sign-up {
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 5;
+  animation: move 0.6s;
+}
+
+@keyframes move {
+
+  0%,
+  49.99% {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 1;
+    z-index: 5;
+  }
+}
+
+.social-icons {
+  margin: 20px 0;
+}
+
+.social-icons a {
+  border: 1px solid #ccc;
+  border-radius: 20%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 3px;
+  width: 40px;
+  height: 40px;
+}
+
+.terus-toggle-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: all 0.6s ease-in-out;
+  border-radius: 150px 0 0 100px;
+  z-index: 1000;
+}
+
+.terus-container.active .terus-toggle-container {
+  transform: translateX(calc(-100% - 1px));
+  border-radius: 0 150px 100px 0;
+}
+
+.terus-toggle {
+  background-color: #512da8;
+  height: 100%;
+  // background: linear-gradient(to right, #5c6bc0, #512da8);
+  background: linear-gradient(to right, #777, #000);
+  color: #fff;
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+}
+
+.terus-container.active .terus-toggle {
+  transform: translateX(50%);
+}
+
+.terus-toggle-panel {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 30px;
+  text-align: center;
+  top: 0;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+}
+
+.terus-toggle-left {
+  transform: translateX(-200%);
+}
+
+.terus-container.active .terus-toggle-left {
+  transform: translateX(0);
+}
+
+.terus-toggle-right {
+  right: 0;
+  transform: translateX(0);
+}
+
+.terus-container.active .terus-toggle-right {
+  transform: translateX(200%);
+}
+
+.terus-forgotpass__link {
+  transition: color .3s ease;
+}
+
+.terus-forgotpass__link:hover {
+  color: var(--highlight-color-1);
+  transition: color .3s ease;
+}
+
+.terus-submit-btn {
+  transition: color .3s ease;
+}
+
+.terus-submit-btn:hover {
+  color: var(--highlight-color-2);
+  transition: color .3s ease;
+}
+
+.terus-hide-pwd {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+  cursor: pointer;
+}

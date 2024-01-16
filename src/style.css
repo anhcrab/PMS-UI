@@ -1,0 +1,31 @@
+:root {
+  --sidebar-color: #24262d;
+  --bg-color: #2f323b;
+  --light-text-color: #000;
+  --dark-text-color: #949ba2;
+  --dark-heading-color: #fff;
+  --section-bg-color: rgba(68, 70, 79, 0.5);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  /* border-radius: 4px; */
+  background-color: #fff;
+}
+
+.terus-section {
+  width: 100%;
+  padding: 50px;
+  background-color: var(--section-bg-color);
+  border-radius: 12px;
+}
