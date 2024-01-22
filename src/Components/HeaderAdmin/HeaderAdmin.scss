@@ -1,9 +1,10 @@
 #terus-admin .terus-header {
   background-color: #fff;
+  // background-color: transparent;
   width: 100%;
   height: 100%;
   padding: 0;
-  // box-shadow: 1px 1px 10px #444;
+  // box-shadow: 1px 1px 10px #ddd;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -19,7 +20,7 @@
   padding: 0 15px;
   color: #fff;
   transition: width .3s ease;
-  box-shadow: 1px 1px #ddd;
+  // box-shadow: 1px 1px #ddd;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -66,7 +67,7 @@
   font-size: 18px;
 }
 
-#terus_search input {
+#terus_search #terus_search_input {
   border: 0.87px solid #ddd;
   border-radius: 25px;
   outline: none;

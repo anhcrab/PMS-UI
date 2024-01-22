@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../../Utils/api";
 import { Navigate } from "react-router-dom";
+import AuthLoading from "../AuthLoading/AuthLoading";
 
 const SignUpForm = () => {
   const [payload, setPayload] = useState({
@@ -9,6 +10,7 @@ const SignUpForm = () => {
     password: "",
   });
   const [pwd, setPwd] = useState(false);
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     const pwdEl = document.getElementById("register-pwd");
     if (pwd) {
@@ -26,21 +28,25 @@ const SignUpForm = () => {
   };
 
   const handleOnSubmit = (e) => {
+    setLoading(true)
     e.preventDefault()
     console.log(payload);
     api
       .post('auth/register', payload)
       .then(response => {
         console.log(response.data);
-        return <Navigate to={'/Auth'} />
+        setLoading(false)
+        return <Navigate to={'/Auth?Action=Login'} />
       })
       .catch(error => {
         console.log(error);
+        setLoading(false)
       })
   }
 
   return (
     <>
+      {loading && <AuthLoading />}
       <div className="terus-form-container sign-up">
         <form id="sign_up_form" onSubmit={handleOnSubmit} >
           <h1 style={{ width: "300px" }}>Tạo Tài Khoản</h1>

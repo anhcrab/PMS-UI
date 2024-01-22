@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { AdminContext } from "../../Layouts/Admin/AdminLayout";
 
 const Sidebar = () => {
-  const [minimize, setMinimize] = useState(false);
+  const [minimize, setMinimize] = useState(true);
   const modules = useContext(AdminContext);
   const handleMinimize = () => {
     setMinimize(!minimize);
@@ -49,6 +49,7 @@ const Sidebar = () => {
                   : "terus-side-nav__link"
               }
               to={"/Admin/Dashboard"}
+              title="Dashboard"
             >
               <i className="bi bi-grid"></i>
               <span className="terus-sidebar__nav-text">Dashboard</span>
@@ -64,6 +65,7 @@ const Sidebar = () => {
                   : "terus-side-nav__link"
               }
               to={"/Admin/Profile"}
+              title="Hồ sơ"
             >
               <i className="bi bi-person"></i>
               <span className="terus-sidebar__nav-text">Hồ sơ</span>
@@ -81,8 +83,11 @@ const Sidebar = () => {
                       : "terus-side-nav__link"
                   }
                   to={"/Admin/Modules/" + m.slug}
+                  title={m.slug}
                 >
-                  <i className={`bi ${m.iconClass ? m.iconClass : 'bi-plugin'}`}></i>
+                  <i
+                    className={`bi ${m.iconClass ? m.iconClass : "bi-plug"}`}
+                  ></i>
                   <span className="terus-sidebar__nav-text">{m.name}</span>
                 </NavLink>
               </li>
@@ -98,7 +103,24 @@ const Sidebar = () => {
                   ? "terus-side-nav__link active"
                   : "terus-side-nav__link"
               }
+              to={"/Admin/Settings?Page=General"}
+              title="Cài đặt"
+            >
+              <i className="bi bi-gear"></i>
+              <span className="terus-sidebar__nav-text">Cài đặt</span>
+            </NavLink>
+          </li>
+          <li className="terus-side-bot__item">
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "terus-side-nav__link"
+                  : isActive
+                  ? "terus-side-nav__link active"
+                  : "terus-side-nav__link"
+              }
               to={"/"}
+              title="Trang chủ"
             >
               <i className="bi bi-house"></i>
               <span className="terus-sidebar__nav-text">Về Trang Chủ</span>
@@ -114,6 +136,7 @@ const Sidebar = () => {
                   : "terus-side-nav__link"
               }
               to={"/Auth/Logout"}
+              title="Đăng xuất"
             >
               <i className="bi bi-box-arrow-left"></i>
               <span className="terus-sidebar__nav-text">Đăng xuất</span>

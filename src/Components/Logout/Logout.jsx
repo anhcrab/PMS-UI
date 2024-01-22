@@ -5,7 +5,7 @@ const Logout = () => {
   localStorage.removeItem('EXPIRATION')
   localStorage.removeItem('USER_ID')
   return (
-    <Navigate to={'/Auth'} />
+    <Navigate to={'/Auth?Action=Login'} />
   )
 }
 

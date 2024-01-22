@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { NavLink, Navigate } from "react-router-dom";
 import { githubLogin } from "../../Utils/OAuth";
 import api from "../../Utils/api";
+import AuthLoading from "../AuthLoading/AuthLoading";
 
 const LoginForm = () => {
   const [pwd, setPwd] = useState(false);
@@ -10,11 +11,9 @@ const LoginForm = () => {
     password: "",
   });
   const [status, setStatus] = useState("pending");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // const queryString = location.search;
-    // const urlParams = new URLSearchParams(queryString);
-    // const code = urlParams.get("code");
     const pwdEl = document.getElementById("login-pwd");
     if (pwd) {
       pwdEl.type = "text";
@@ -31,6 +30,7 @@ const LoginForm = () => {
   };
 
   const signin = (e) => {
+    setLoading(true)
     e.preventDefault();
     api
       .post("auth/login", payload)
@@ -39,6 +39,7 @@ const LoginForm = () => {
         localStorage.setItem("ACCESS_TOKEN", token);
         localStorage.setItem("EXPIRATION", expiration);
         localStorage.setItem("USER_ID", id);
+        setLoading(false)
         setStatus("success");
       })
       .catch((error) => {
@@ -49,6 +50,7 @@ const LoginForm = () => {
   };
   return (
     <>
+      {loading && <AuthLoading/>}
       {status === "success" && (
         <Navigate to={"/Admin/Dashboard"} replace={true} />
       )}

@@ -9,6 +9,7 @@ import Dashboard from "./Dashboard/Dashboard";
 import Profile from "./Profile/Profile";
 import Logout from "../Components/Logout/Logout";
 import Modules from "../Layouts/Modules/Modules";
+import Settings from "./Settings/Settings";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: 'Modules/:slug',
         element: <Modules />
+      },
+      {
+        path: 'Settings',
+        element: <Settings />
       }
     ]
   },

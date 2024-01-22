@@ -1,10 +1,11 @@
 .terus-sidebar {
   width: 100%;
-  height: calc(100% - 22px);
+  height: calc(100% - 21px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+  background-color: var(--sidebar-color);
 }
 
 .terus-sidebar .terus-minimize__btn {
@@ -65,6 +66,10 @@
 
 .terus-side-nav__link.active {
   background-color: #111;
+}
+
+.terus-side-nav__link.active i {
+  color: var(--gradient-gold);
 }
 
 .minimized .terus-side-nav__link.active {

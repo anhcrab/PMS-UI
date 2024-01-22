@@ -1,0 +1,32 @@
+
+#terus-settings :is(th:first-child, td:first-child) {
+  width: 50px;
+}
+
+.terus-button {
+  border: 0.87px solid var(--gradient-gold);
+  border-radius: 4px;
+  background-color: transparent;
+  padding: 5px 10px;
+  transition: background-color .3s ease;
+}
+
+.terus-button:hover {
+  background-color: rgba($color: #bfa40a, $alpha: .1);
+  transition: background-color .3s ease;
+}
+
+.terus-form {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.terus-heading-inline  {
+  display: flex;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}

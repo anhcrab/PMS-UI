@@ -13,7 +13,8 @@ const Modules = () => {
   return (
     <>
       { loading && <Loading/> }
-      <div>Modules {slug}</div>
+      <div>Module {slug}</div>
+      <div id="terus-module-test"></div>
     </>
   )
 }

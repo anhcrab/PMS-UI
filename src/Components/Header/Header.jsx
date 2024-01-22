@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "./Header.scss";
+import logo from '../../assets/imgs/logo-web.png'
 
 const Header = () => {
   return (
@@ -8,7 +9,7 @@ const Header = () => {
         <div className="terus-left">
           <NavLink to={"/"}>
             <img
-              src="/src/assets/imgs/logo-web.png"
+              src={logo}
               alt="logo"
               className="terus-logo"
             />
@@ -18,7 +19,7 @@ const Header = () => {
           <span className="terus-notification">
             <i className="bi bi-bell-fill"></i>
           </span>
-          <NavLink to={"/Auth"} className={'terus-account'}>
+          <NavLink to={"/Auth?Action=Login"} className={'terus-account'}>
             <i className="bi bi-person-fill"></i>
             <ul id="terus-account__sub-menu">
               <li className="terus-account__sub-item">

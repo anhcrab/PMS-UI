@@ -6,13 +6,13 @@ import { Outlet, useSearchParams } from "react-router-dom";
 import { authenticate } from "../../Utils/utils";
 
 const Auth = () => {
-  const [searchParams] = useSearchParams();
+  const [urlParams, setUrlParams] = useSearchParams();
   const [toggle, setToggle] = useState("login");
   useEffect(() => {
-    if (searchParams.get("action") === "signup") {
-      setToggle("register");
+    if (urlParams.has("Action")) {
+      setToggle(urlParams.get('Action'));
     }
-  }, [searchParams]);
+  }, [urlParams]);
   useEffect(() => {
     document.querySelectorAll(".terus-pwd").forEach((element) => {
       element.value = "";
@@ -23,11 +23,11 @@ const Auth = () => {
       <Outlet />
       {authenticate('/Admin/Dashboard', false)}
       <div
-        className={`terus-container${toggle === "register" ? " active" : ""}`}
+        className={`terus-container${toggle === "Register" ? " active" : ""}`}
         id="container"
       >
         <SignUpForm />
-        <LoginForm state={toggle} />
+        <LoginForm />
         <div className="terus-toggle-container">
           <div className="terus-toggle">
             <div className="terus-toggle-panel terus-toggle-left">
@@ -43,7 +43,7 @@ const Auth = () => {
                 className="hidden highlight-2"
                 id="login"
                 onClick={() => {
-                  setToggle("login");
+                  setUrlParams({ Action: 'Login' })
                 }}
               >
                 Đăng Nhập
@@ -58,7 +58,7 @@ const Auth = () => {
                 className="hidden highlight-1"
                 id="register"
                 onClick={() => {
-                  setToggle("register");
+                  setUrlParams({ Action: 'Register' })
                 }}
               >
                 Đăng ký

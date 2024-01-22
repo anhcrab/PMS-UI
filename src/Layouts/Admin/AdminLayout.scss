@@ -2,7 +2,8 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: var(--bg-color);
+  // background-color: var(--bg-color)
+  background-color: #fff;
 }
 
 #terus-admin__top {
@@ -21,12 +22,14 @@
 #terus-admin__body-sidebar {
   width: 12%;
   background-color: var(--sidebar-color);
+  background-color: transparent;
   transition: width .3s ease;
 }
 
 #terus-admin__body-main {
   width: 88%;
   color: var(--dark-text-color);
+  background-color: var(--bg-color);
   position: relative;
 }
 
