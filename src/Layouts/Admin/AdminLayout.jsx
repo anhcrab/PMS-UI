@@ -4,32 +4,30 @@ import Sidebar from "../../Components/Sidebar/Sidebar";
 import "./AdminLayout.scss";
 import { authenticate } from "../../Utils/utils";
 import { createContext, useEffect, useState } from "react";
-import api from "../../Utils/api";
 import AdminLoading from "../../Components/AdminLoading/AdminLoading";
+import Notifycation from "../../Components/Notification/Notifycation";
 
 export const AdminContext = createContext();
 
 const AdminLayout = () => {
-  const [modules, setModules] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [notification, setNotification] = useState([
+    {
+      status: "show",
+      type: 'default',
+      title: "Terus",
+      time: Date.now(),
+      content: "Chào mừng quay trở lại.",
+    },
+  ]);
   useEffect(() => {
-    // Fetch api lấy thông tin về các modules.
-    api.get("modules").then((response) => {
-      const { data } = response;
-      console.log(data);
-      const list = [];
-      data.forEach((item) => {
-        list.push(item);
-      });
-      setModules(list);
-      setLoading(false);
-    });
+    setLoading(false);
   }, []);
   return (
     <>
       {loading && <AdminLoading />}
-      {authenticate("/Auth", true)}
-      <AdminContext.Provider value={modules}>
+      {trackingAuth()}
+      <AdminContext.Provider value={{ notification, setNotification }}>
         <div id="terus-admin">
           <div id="terus-admin__top">
             <HeaderAdmin />
@@ -38,12 +36,20 @@ const AdminLayout = () => {
             <Sidebar />
             <main id="terus-admin__body-main">
               <Outlet />
+              <Notifycation />
             </main>
           </div>
         </div>
       </AdminContext.Provider>
     </>
   );
+};
+
+const trackingAuth = () => {
+  authenticate("/Auth", true);
+  setInterval(() => {
+    authenticate("/Auth", true);
+  }, 10 * 60 * 1000);
 };
 
 export default AdminLayout;

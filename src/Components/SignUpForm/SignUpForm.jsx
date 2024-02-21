@@ -11,6 +11,7 @@ const SignUpForm = () => {
   });
   const [pwd, setPwd] = useState(false);
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState({})
   useEffect(() => {
     const pwdEl = document.getElementById("register-pwd");
     if (pwd) {
@@ -38,9 +39,10 @@ const SignUpForm = () => {
         setLoading(false)
         return <Navigate to={'/Auth?Action=Login'} />
       })
-      .catch(error => {
-        console.log(error);
+      .catch(err => {
+        console.log(err.response.data[0]);
         setLoading(false)
+        setError(err.response.data[0])
       })
   }
 
@@ -93,6 +95,9 @@ const SignUpForm = () => {
               }}
             ></i>
           </div>
+          <span style={{ width: "100%", color: 'red' }}>
+            {error.description}
+          </span>
           <button type="submit" className="terus-submit-btn">
             Đăng Ký
           </button>

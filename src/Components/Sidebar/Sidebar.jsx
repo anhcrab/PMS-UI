@@ -1,11 +1,9 @@
 import { NavLink } from "react-router-dom";
 import "./Sidebar.scss";
-import { useContext, useEffect, useState } from "react";
-import { AdminContext } from "../../Layouts/Admin/AdminLayout";
+import { useEffect, useState } from "react";  
 
 const Sidebar = () => {
   const [minimize, setMinimize] = useState(true);
-  const modules = useContext(AdminContext);
   const handleMinimize = () => {
     setMinimize(!minimize);
   };
@@ -71,27 +69,54 @@ const Sidebar = () => {
               <span className="terus-sidebar__nav-text">Hồ sơ</span>
             </NavLink>
           </li>
-          {modules &&
-            modules.map((m, i) => (
-              <li key={i} className="terus-side-top__item">
-                <NavLink
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "terus-side-nav__link"
-                      : isActive
-                      ? "terus-side-nav__link active"
-                      : "terus-side-nav__link"
-                  }
-                  to={"/Admin/Modules/" + m.slug}
-                  title={m.slug}
-                >
-                  <i
-                    className={`bi ${m.iconClass ? m.iconClass : "bi-plug"}`}
-                  ></i>
-                  <span className="terus-sidebar__nav-text">{m.name}</span>
-                </NavLink>
-              </li>
-            ))}
+          <li className="terus-side-top__item">
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "terus-side-nav__link"
+                  : isActive
+                  ? "terus-side-nav__link active"
+                  : "terus-side-nav__link"
+              }
+              to={"/Admin/Employees"}
+              title={'Nhân sự'}
+            >
+              <i className={`bi bi-people`}></i>
+              <span className="terus-sidebar__nav-text">Nhân sự</span>
+            </NavLink>
+          </li>
+          <li className="terus-side-top__item">
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "terus-side-nav__link"
+                  : isActive
+                  ? "terus-side-nav__link active"
+                  : "terus-side-nav__link"
+              }
+              to={"/Admin/Departments"}
+              title={'Phòng ban'}
+            >
+              <i className={`bi bi-building`}></i>
+              <span className="terus-sidebar__nav-text">Phòng ban</span>
+            </NavLink>
+          </li>
+          <li className="terus-side-top__item">
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "terus-side-nav__link"
+                  : isActive
+                  ? "terus-side-nav__link active"
+                  : "terus-side-nav__link"
+              }
+              to={"/Admin/Projects"}
+              title={'Dự án'}
+            >
+              <i className={`bi bi-suitcase-lg`}></i>
+              <span className="terus-sidebar__nav-text">Dự án</span>
+            </NavLink>
+          </li>
         </ul>
         <ul className="terus-side-bot__list">
           <li className="terus-side-bot__item">

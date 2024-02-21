@@ -30,27 +30,28 @@ const LoginForm = () => {
   };
 
   const signin = (e) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
     api
       .post("auth/login", payload)
       .then((response) => {
-        const { token, expiration, id } = response.data;
+        const { token } = response.data;
         localStorage.setItem("ACCESS_TOKEN", token);
-        localStorage.setItem("EXPIRATION", expiration);
-        localStorage.setItem("USER_ID", id);
-        setLoading(false)
+        // localStorage.setItem("EXPIRATION", expiration);
+        // localStorage.setItem("USER_ID", id);
+        setLoading(false);
         setStatus("success");
       })
       .catch((error) => {
         if (error.response.status === 401) {
           setStatus("failed");
+          setLoading(false);
         }
       });
   };
   return (
     <>
-      {loading && <AuthLoading/>}
+      {loading && <AuthLoading />}
       {status === "success" && (
         <Navigate to={"/Admin/Dashboard"} replace={true} />
       )}
@@ -94,6 +95,13 @@ const LoginForm = () => {
               }}
             ></i>
           </div>
+          {status == "failed" ? (
+            <span style={{ color: "red" }}>
+              Email / Mật khẩu không tồn tại / chính xác.
+            </span>
+          ) : (
+            ""
+          )}
           <NavLink className="terus-forgotpass__link" to={"/auth"}>
             Quên mật khẩu?
           </NavLink>

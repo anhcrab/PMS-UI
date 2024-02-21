@@ -1,0 +1,26 @@
+#terus-employee-page .nav-link,
+#terus-department-page .nav-link {
+  background-color: transparent;
+  border-bottom: none;
+  color: white;
+}
+
+#list-table {
+  overflow-y: auto;
+  max-height: 500px;
+}
+
+.action-container {
+  display: flex;
+  gap: 20px;
+}
+
+.action-item {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.page-link {
+  --bs-pagination-color: white;
+  --bs-pagination-bg: transparent;
+}

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Settings.scss";
 import Loading from "../../Components/Loading/Loading";
-import SettingModules from "../../Components/SettingModules/SettingModules";
 import SettingGeneral from "../../Components/SettingGeneral/SettingGeneral";
 import { useSearchParams } from "react-router-dom";
 
@@ -52,19 +51,6 @@ const Settings = () => {
                   <i className="bi bi-person-vcard-fill"></i> Vai trò
                 </li>
                 <li
-                  className={`terus-settings__nav-items modules${
-                    urlParams.get("Page") === "Modules" ? " active" : ""
-                  }`}
-                  onClick={() => {
-                    setUrlParams({
-                      Page: "Modules",
-                      Action: "List",
-                    });
-                  }}
-                >
-                  <i className="bi bi-plugin"></i> Modules
-                </li>
-                <li
                   className={`terus-settings__nav-items${
                     urlParams.get("Page") === "More" ? " active" : ""
                   }`}
@@ -79,9 +65,6 @@ const Settings = () => {
           </div>
         </nav>
         {urlParams.get("Page") === "General" && <SettingGeneral />}
-        {urlParams.get("Page") === "Modules" && (
-          <SettingModules />
-        )}
       </div>
     </>
   );

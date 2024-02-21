@@ -8,8 +8,10 @@ import Page404 from "./Page404/Page404";
 import Dashboard from "./Dashboard/Dashboard";
 import Profile from "./Profile/Profile";
 import Logout from "../Components/Logout/Logout";
-import Modules from "../Layouts/Modules/Modules";
 import Settings from "./Settings/Settings";
+import Employee from "./Employee/Employee";
+import Projects from "./Project/Projects";
+import Department from "./Department/Department";
 
 const router = createBrowserRouter([
   {
@@ -43,8 +45,16 @@ const router = createBrowserRouter([
         element: <Profile />
       },
       {
-        path: 'Modules/:slug',
-        element: <Modules />
+        path: "Employees",
+        element: <Employee />
+      },
+      {
+        path: 'Departments',
+        element: <Department />
+      },
+      {
+        path: "Projects",
+        element: <Projects />
       },
       {
         path: 'Settings',
