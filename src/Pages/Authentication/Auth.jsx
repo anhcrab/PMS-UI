@@ -18,6 +18,7 @@ const Auth = () => {
       element.value = "";
     });
   }, [toggle]);
+  console.clear();
   return (
     <>
       <Outlet />

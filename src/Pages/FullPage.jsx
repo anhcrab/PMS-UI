@@ -1,4 +1,3 @@
-// import { Route, Router, Routes } from "react-router-dom"
 import Auth from "./Authentication/Auth";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ClientLayout from "../Layouts/Client/ClientLayout";
@@ -11,7 +10,6 @@ import Logout from "../Components/Logout/Logout";
 import Settings from "./Settings/Settings";
 import Employee from "./Employee/Employee";
 import Projects from "./Project/Projects";
-import Department from "./Department/Department";
 
 const router = createBrowserRouter([
   {
@@ -49,16 +47,12 @@ const router = createBrowserRouter([
         element: <Employee />
       },
       {
-        path: 'Departments',
-        element: <Department />
-      },
-      {
         path: "Projects",
         element: <Projects />
       },
       {
         path: 'Settings',
-        element: <Settings />
+        element: <Settings />,
       }
     ]
   },

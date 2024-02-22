@@ -115,6 +115,11 @@
   transition: all 0.6s ease-in-out;
 }
 
+#sign_in_form :is(h1, span, i, input),
+#sign_up_form :is(h1, span, i, input) {
+  color: #000;
+}
+
 .sign-in {
   left: 0;
   width: 50%;

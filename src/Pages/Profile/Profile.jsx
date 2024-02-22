@@ -42,9 +42,7 @@ const Profile = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(info);
-    api.post("profile", info).then((res) => {
-      console.log(res.data);
+    api.post("profile", info).then(() => {
       location.reload();
     });
   };
@@ -195,9 +193,8 @@ const Profile = () => {
                         rows="5"
                         placeholder="Mô tả ngắn về bản thân..."
                         onChange={handleChange}
-                      >
-                        {user.description}
-                      </textarea>
+                        defaultValue={user.description}
+                      ></textarea>
                     </div>
                   </div>
                   <div className="row">

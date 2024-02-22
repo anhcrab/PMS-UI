@@ -6,6 +6,8 @@ import { authenticate } from "../../Utils/utils";
 import { createContext, useEffect, useState } from "react";
 import AdminLoading from "../../Components/AdminLoading/AdminLoading";
 import Notifycation from "../../Components/Notification/Notifycation";
+import api from "../../Utils/api";
+import { Show } from "../../Components/Show/Show";
 
 export const AdminContext = createContext();
 
@@ -14,42 +16,62 @@ const AdminLayout = () => {
   const [notification, setNotification] = useState([
     {
       status: "show",
-      type: 'default',
-      title: "Terus",
+      type: "default",
+      title: "Hệ thống",
       time: Date.now(),
-      content: "Chào mừng quay trở lại.",
+      content: "Chào mừng bạn đến với Terus.",
     },
   ]);
+  const [accessControl, setAccessControl] = useState({
+    role: "CLIENT",
+  });
   useEffect(() => {
-    setLoading(false);
+    api
+      .get("auth/role")
+      .then((res) => {
+        setAccessControl({
+          ...accessControl,
+          role: res.data.toUpperCase(),
+        });
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
   return (
     <>
-      {loading && <AdminLoading />}
-      {trackingAuth()}
-      <AdminContext.Provider value={{ notification, setNotification }}>
-        <div id="terus-admin">
-          <div id="terus-admin__top">
-            <HeaderAdmin />
-          </div>
-          <div id="terus-admin__body">
-            <Sidebar />
-            <main id="terus-admin__body-main">
-              <Outlet />
-              <Notifycation />
-            </main>
-          </div>
-        </div>
-      </AdminContext.Provider>
+      {authenticate("/Auth", true)}
+      <Show>
+        <Show.When isTrue={loading}>
+          <AdminLoading />
+        </Show.When>
+        <Show.Else>
+          <AdminContext.Provider
+            value={{
+              notification,
+              setNotification,
+              accessControl,
+              setAccessControl,
+            }}
+          >
+            <div id="terus-admin">
+              <div id="terus-admin__top">
+                <HeaderAdmin />
+              </div>
+              <div id="terus-admin__body">
+                <Sidebar />
+                <main id="terus-admin__body-main">
+                  <Outlet />
+                  <Notifycation />
+                </main>
+              </div>
+            </div>
+          </AdminContext.Provider>
+        </Show.Else>
+      </Show>
     </>
   );
-};
-
-const trackingAuth = () => {
-  authenticate("/Auth", true);
-  setInterval(() => {
-    authenticate("/Auth", true);
-  }, 10 * 60 * 1000);
 };
 
 export default AdminLayout;

@@ -35,10 +35,9 @@ const LoginForm = () => {
     api
       .post("auth/login", payload)
       .then((response) => {
-        const { token } = response.data;
+        const { token, expiration } = response.data;
         localStorage.setItem("ACCESS_TOKEN", token);
-        // localStorage.setItem("EXPIRATION", expiration);
-        // localStorage.setItem("USER_ID", id);
+        localStorage.setItem("EXPIRATION", expiration);
         setLoading(false);
         setStatus("success");
       })

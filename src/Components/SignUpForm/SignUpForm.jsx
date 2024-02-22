@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import api from "../../Utils/api";
-import { Navigate } from "react-router-dom";
 import AuthLoading from "../AuthLoading/AuthLoading";
 
 const SignUpForm = () => {
@@ -10,8 +9,8 @@ const SignUpForm = () => {
     password: "",
   });
   const [pwd, setPwd] = useState(false);
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState({})
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({});
   useEffect(() => {
     const pwdEl = document.getElementById("register-pwd");
     if (pwd) {
@@ -35,14 +34,16 @@ const SignUpForm = () => {
     api
       .post('auth/register', payload)
       .then(response => {
-        console.log(response.data);
-        setLoading(false)
-        return <Navigate to={'/Auth?Action=Login'} />
+        const { token, expiration } = response.data;
+        localStorage.setItem("ACCESS_TOKEN", token);
+        localStorage.setItem("EXPIRATION", expiration);
+        setLoading(false);
+        location.href = '/Admin/Dashboard';
       })
       .catch(err => {
-        console.log(err.response.data[0]);
+        console.log(err.response);
         setLoading(false)
-        setError(err.response.data[0])
+        setError(err.response)
       })
   }
 
@@ -50,7 +51,7 @@ const SignUpForm = () => {
     <>
       {loading && <AuthLoading />}
       <div className="terus-form-container sign-up">
-        <form id="sign_up_form" onSubmit={handleOnSubmit} >
+        <form id="sign_up_form" onSubmit={handleOnSubmit}>
           <h1 style={{ width: "300px" }}>Tạo Tài Khoản</h1>
           <div className="social-icons">
             <a href="#" className="icon">
@@ -72,6 +73,7 @@ const SignUpForm = () => {
             type="text"
             placeholder="Tên"
             onChange={handleOnChange}
+            data-bs-theme="light"
           />
           <input
             name="email"
