@@ -25,11 +25,12 @@ const Settings = () => {
   ];
   const userEndpoint = "users";
   const userActions = {
+    turnOn: true,
     watch: {
-      isAllowed: false,
+      isAllowed: true,
     },
     edit: {
-      isAllowed: false,
+      isAllowed: true,
     },
     delete: {
       isAllowed: true,
