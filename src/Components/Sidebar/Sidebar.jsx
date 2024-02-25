@@ -124,30 +124,32 @@ const Sidebar = () => {
           </li>
           <Show>
             <Show.When isTrue={accessControl.role !== "CLIENT"}>
-              <Show>
-                <Show.When isTrue={accessControl.role !== "EMPLOYEE"}>
-                  <li
-                    className="terus-side-top__item"
-                    data-bs-toggle={tooltip.toggle}
-                    data-bs-placement={tooltip.placement}
-                    data-bs-content="Nhân sự"
-                  >
-                    <NavLink
-                      className={({ isActive, isPending }) =>
-                        isPending
-                          ? "terus-side-nav__link"
-                          : isActive
-                          ? "terus-side-nav__link active"
-                          : "terus-side-nav__link"
-                      }
-                      to={"/Admin/Employees"}
-                    >
-                      <i className={`bi bi-people`}></i>
-                      <span className="terus-sidebar__nav-text">Nhân sự</span>
-                    </NavLink>
-                  </li>
-                </Show.When>
-              </Show>
+              <li
+                className="terus-side-top__item"
+                data-bs-toggle={tooltip.toggle}
+                data-bs-placement={tooltip.placement}
+                data-bs-content={
+                  accessControl.role === "EMPLOYEE" ? "Nhóm của tôi" : "Nhân sự"
+                }
+              >
+                <NavLink
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "terus-side-nav__link"
+                      : isActive
+                      ? "terus-side-nav__link active"
+                      : "terus-side-nav__link"
+                  }
+                  to={"/Admin/Employees"}
+                >
+                  <i className={`bi bi-people`}></i>
+                  <span className="terus-sidebar__nav-text">
+                    {accessControl.role === "EMPLOYEE"
+                      ? "Nhóm của tôi"
+                      : "Nhân sự"}
+                  </span>
+                </NavLink>
+              </li>
               <li
                 className="terus-side-top__item"
                 data-bs-toggle={tooltip.toggle}

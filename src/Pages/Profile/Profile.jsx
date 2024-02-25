@@ -12,9 +12,10 @@ const Profile = () => {
     phoneNumber: "",
     sex: "",
     dob: "",
+    address: "",
     description: "",
   });
-  const [role, setRole] = useState("Client")
+  const [role, setRole] = useState("Client");
   useEffect(() => {
     api.get("profile").then((res) => {
       console.log(res.data);
@@ -27,13 +28,14 @@ const Profile = () => {
         phoneNumber: data.phoneNumber,
         sex: data.sex,
         dob: data.dob,
+        address: data.address,
         description: data.description,
       });
     });
   }, []);
   useEffect(() => {
-    api.get('auth/role').then(res => setRole(res.data))
-  }, [user])
+    api.get("auth/role").then((res) => setRole(res.data));
+  }, [user]);
   const handleChange = (e) => {
     setInfo({
       ...info,
@@ -189,8 +191,20 @@ const Profile = () => {
                     <div className="col-lg-12 mb-3">
                       <textarea
                         className="form-control"
+                        name="address"
+                        rows="2"
+                        placeholder="Địa chỉ"
+                        onChange={handleChange}
+                        defaultValue={user.address}
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-lg-12 mb-3">
+                      <textarea
+                        className="form-control"
                         name="description"
-                        rows="5"
+                        rows="4"
                         placeholder="Mô tả ngắn về bản thân..."
                         onChange={handleChange}
                         defaultValue={user.description}
@@ -215,34 +229,36 @@ const Profile = () => {
                       aria-labelledby="confirmModalLabel"
                       aria-hidden="true"
                     >
-                      <div className="modal-dialog">
+                      <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
-                          <div className="modal-header">
-                            <h1
-                              className="modal-title fs-5"
-                              id="confirmModalLabel"
-                            >
-                              Cập nhật hồ sơ
-                            </h1>
-                            <button
-                              type="button"
-                              className="btn-close"
-                              data-bs-dismiss="modal"
-                              aria-label="Close"
-                            ></button>
-                          </div>
-                          <div className="modal-body">Bạn có chắc chắn ?</div>
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              className="btn btn-secondary"
-                              data-bs-dismiss="modal"
-                            >
-                              Đóng
-                            </button>
-                            <button type="submit" className="btn btn-primary">
-                              Lưu thay đổi
-                            </button>
+                          <div className="modal-body d-flex flex-column gap-4">
+                            <div className="d-flex justify-content-between">
+                              <h3
+                                className="modal-title fs-5"
+                                id="updateProfileLabel"
+                              >
+                                Hệ thống cần xác nhận
+                              </h3>
+                              <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            Bạn có chắc chắn muốn cập nhật hồ sơ?
+                            <div className="d-flex justify-content-end gap-2">
+                              <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                              >
+                                Đóng
+                              </button>
+                              <button type="submit" className="btn btn-success">
+                                Lưu thay đổi
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>

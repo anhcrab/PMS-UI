@@ -27,6 +27,10 @@
   gap: 10px;
 }
 
+.terus-left * {
+  visibility: hidden;
+}
+
 #terus-admin .terus-left h1 {
   text-transform: uppercase;
   font-size: 20px;
