@@ -8,6 +8,12 @@ import AdminLoading from "../../Components/AdminLoading/AdminLoading";
 import Notifycation from "../../Components/Notification/Notifycation";
 import api from "../../Utils/api";
 import { Show } from "../../Components/Show/Show";
+import Avatar1 from '../../assets/imgs/Avatar1.svg';
+import Avatar2 from '../../assets/imgs/Avatar2.svg';
+import Avatar3 from '../../assets/imgs/Avatar3.svg';
+import Avatar4 from '../../assets/imgs/Avatar4.svg';
+import Avatar5 from '../../assets/imgs/Avatar5.svg';
+import Avatar6 from '../../assets/imgs/Avatar6.svg';
 
 export const AdminContext = createContext();
 
