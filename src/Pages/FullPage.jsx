@@ -21,7 +21,7 @@ const router = createBrowserRouter([
         element: <HomePage />
       },
       {
-        path: "Auth/*",
+        path: "Auth/:action",
         element: <Auth />,
         children: [{
           path: 'Logout',

@@ -100,7 +100,7 @@ const SignUpForm = () => {
           <span style={{ width: "100%", color: 'red' }}>
             {error?.description}
           </span>
-          <button type="submit" className="terus-submit-btn">
+          <button type="submit" className="terus-submit-btn button">
             Đăng Ký
           </button>
         </form>

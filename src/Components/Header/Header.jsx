@@ -19,7 +19,7 @@ const Header = () => {
             className={"terus-account"}
             style={{ cursor: 'pointer ' }}
             onClick={() => {
-              location.href = "/Auth?Action=Login";
+              location.href = "/Auth/Login";
             }}
           >
             <i className="bi bi-person-fill"></i>

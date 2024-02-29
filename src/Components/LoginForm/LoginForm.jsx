@@ -104,7 +104,7 @@ const LoginForm = () => {
           <NavLink className="terus-forgotpass__link" to={"/auth"}>
             Quên mật khẩu?
           </NavLink>
-          <button type="submit" className="terus-submit-btn">
+          <button type="submit" className="terus-submit-btn button">
             Đăng Nhập
           </button>
         </form>

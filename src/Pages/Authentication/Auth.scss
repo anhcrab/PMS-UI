@@ -8,11 +8,11 @@
 }
 
 .highlight-1:hover {
-  color: var(--highlight-color-1);
+  color: var(--highlight-color-1) !important;
 }
 
 .highlight-2:hover {
-  color: var(--highlight-color-2);
+  color: var(--highlight-color-2) !important;
 }
 
 .terus-client__content {
@@ -54,7 +54,7 @@
   margin: 15px 0 10px;
 }
 
-.terus-container button {
+.terus-container :is(.button) {
   // background-color: #512da8;
   background-color: #aaa;
   color: #fff;
@@ -69,18 +69,18 @@
   cursor: pointer;
 }
 
-.terus-container button.hidden {
+.terus-container .button.hidden {
   background-color: transparent;
   transition: color .3s ease;
   border-radius: 7px;
 }
 
-.terus-container button.hidden.highlight-1 {
-  border-color: var(--highlight-color-1);
+.terus-container .button.hidden.highlight-1 {
+  border-color: var(--highlight-color-1) !important;
 }
 
-.terus-container button.hidden.highlight-2 {
-  border-color: var(--highlight-color-2);
+.terus-container .button.hidden.highlight-2 {
+  border-color: var(--highlight-color-2) !important;
 }
 
 .terus-container button.hidden:hover {
