@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import "./HeaderAdmin.scss";
+import { AdminContext } from "../../Layouts/Admin/AdminLayout";
 
 const HeaderAdmin = () => {
+  const { heading } = useContext(AdminContext)
   return (
     <header className="terus-header">
       <div className="terus-left">
@@ -11,8 +14,8 @@ const HeaderAdmin = () => {
         />
         <h1>terus</h1>
       </div>
-      <div className="terus-right">
-        <div className="terus-header-search__container">
+      <div className="terus-right d-flex justify-content-between px-4">
+        {/* <div className="terus-header-search__container">
           <label htmlFor="terus_search_input" id="terus_search">
             <i className="bi bi-search"></i>
             <input
@@ -22,7 +25,8 @@ const HeaderAdmin = () => {
               placeholder="Search..."
             />
           </label>
-        </div>
+        </div> */}
+        <h2 className="text-dark fs-4 mb-0">{heading}</h2>
       </div>
     </header>
   );

@@ -1,0 +1,26 @@
+.rs-calendar-table-cell-selected .rs-calendar-table-cell-content {
+  background-color: var(--gradient-gold) !important;
+}
+
+.projects-table .rs-table-body-wheel-area {
+  background-color: var(--rs-bg-card);
+}
+
+.terus-column__pj-name {
+  cursor: pointer;
+  transition: color .3s ease;
+}
+
+.terus-column__pj-name i {
+  visibility: hidden;
+}
+
+.terus-column__pj-name:hover {
+  color: var(--gradient-gold);
+  transition: color .3s ease;
+}
+
+.terus-column__pj-name:hover i {
+  visibility: visible;
+  font-size: 14px;
+}

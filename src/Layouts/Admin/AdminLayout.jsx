@@ -5,15 +5,15 @@ import "./AdminLayout.scss";
 import { authenticate } from "../../Utils/utils";
 import { createContext, useEffect, useState } from "react";
 import AdminLoading from "../../Components/AdminLoading/AdminLoading";
-import Notifycation from "../../Components/Notification/Notifycation";
+import Notification from "../../Components/Notification/Notification";
 import api from "../../Utils/api";
 import { Show } from "../../Components/Show/Show";
-import Avatar1 from '../../assets/imgs/Avatar1.svg';
-import Avatar2 from '../../assets/imgs/Avatar2.svg';
-import Avatar3 from '../../assets/imgs/Avatar3.svg';
-import Avatar4 from '../../assets/imgs/Avatar4.svg';
-import Avatar5 from '../../assets/imgs/Avatar5.svg';
-import Avatar6 from '../../assets/imgs/Avatar6.svg';
+// import Avatar1 from '../../assets/imgs/Avatar1.svg';
+// import Avatar2 from '../../assets/imgs/Avatar2.svg';
+// import Avatar3 from '../../assets/imgs/Avatar3.svg';
+// import Avatar4 from '../../assets/imgs/Avatar4.svg';
+// import Avatar5 from '../../assets/imgs/Avatar5.svg';
+// import Avatar6 from '../../assets/imgs/Avatar6.svg';
 
 export const AdminContext = createContext();
 
@@ -31,6 +31,7 @@ const AdminLayout = () => {
   const [accessControl, setAccessControl] = useState({
     role: "CLIENT",
   });
+  const [heading, setHeading] = useState();
   useEffect(() => {
     api
       .get("auth/role")
@@ -47,7 +48,7 @@ const AdminLayout = () => {
   }, []);
   return (
     <>
-      {authenticate("/Auth", true)}
+      {authenticate("/Auth/Login", true)}
       <Show>
         <Show.When isTrue={loading}>
           <AdminLoading />
@@ -59,6 +60,8 @@ const AdminLayout = () => {
               setNotification,
               accessControl,
               setAccessControl,
+              heading,
+              setHeading,
             }}
           >
             <div id="terus-admin">
@@ -69,8 +72,17 @@ const AdminLayout = () => {
                 <Sidebar />
                 <main id="terus-admin__body-main">
                   <Outlet />
-                  <Notifycation />
+                  <div className="w-100 text-end px-4" style={{ height: "50px" }}>
+                    © 2024, Made by{" "}
+                    <a
+                      href="https://terusvn.com"
+                      style={{ color: "var(--gradient-gold)" }}
+                    >
+                      Terus
+                    </a>
+                  </div>
                 </main>
+                <Notification />
               </div>
             </div>
           </AdminContext.Provider>

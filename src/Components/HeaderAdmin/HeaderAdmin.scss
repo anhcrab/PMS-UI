@@ -11,7 +11,7 @@
 }
 
 #terus-admin .terus-left {
-  width: 12%;
+  width: 200px;
   height: 100%;
   background-color: #24262d;
   display: flex;
@@ -47,11 +47,11 @@
 }
 
 #terus-admin .terus-right {
-  width: 88%;
+  width: calc(100% - 200px);
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0 30px;
+  // padding: 0 20px;
   transition: width .3s ease;
 }
 

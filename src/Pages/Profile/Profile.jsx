@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Profile.scss";
 import Loading from "../../Components/Loading/Loading";
 import api from "../../Utils/api";
+import { AdminContext } from "../../Layouts/Admin/AdminLayout";
 
 const Profile = () => {
+  const { setHeading } = useContext(AdminContext)
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [info, setInfo] = useState({
@@ -17,6 +19,7 @@ const Profile = () => {
   });
   const [role, setRole] = useState("Client");
   useEffect(() => {
+    setHeading("Hồ sơ")
     api.get("profile").then((res) => {
       console.log(res.data);
       const { data } = res;
@@ -54,7 +57,7 @@ const Profile = () => {
       {user && (
         <div id="terus-profile-page">
           <div className="row p50">
-            <h1 className="col-lg-12 text-start">Hồ sơ cá nhân</h1>
+            {/* <h1 className="col-lg-12 text-start">Hồ sơ cá nhân</h1> */}
             <div className="col-lg-9 fl-g3 h-full">
               <section className="terus-section">
                 <form

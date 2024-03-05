@@ -1,7 +1,12 @@
-import FullPage from "./Pages/FullPage"
+import { CustomProvider } from "rsuite";
+import FullPage from "./Pages/FullPage";
 
 function App() {
-  return <FullPage/>
+  return (
+    <CustomProvider theme="dark">
+      <FullPage />
+    </CustomProvider>
+  );
 }
 
-export default App
+export default App;

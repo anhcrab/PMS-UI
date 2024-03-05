@@ -52,7 +52,7 @@ const SignUpForm = () => {
       {loading && <AuthLoading />}
       <div className="terus-form-container sign-up">
         <form id="sign_up_form" onSubmit={handleOnSubmit}>
-          <h1 style={{ width: "300px" }}>Tạo Tài Khoản</h1>
+          <h1 style={{ width: "300px", fontWeight: 500 }}>Tạo Tài Khoản</h1>
           <div className="social-icons">
             <a href="#" className="icon">
               <i className="bi bi-google"></i>

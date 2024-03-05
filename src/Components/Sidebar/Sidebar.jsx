@@ -150,26 +150,35 @@ const Sidebar = () => {
                   </span>
                 </NavLink>
               </li>
-              <li
-                className="terus-side-top__item"
-                data-bs-toggle={tooltip.toggle}
-                data-bs-placement={tooltip.placement}
-                data-bs-content="Dự án"
-              >
-                <NavLink
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "terus-side-nav__link"
-                      : isActive
-                      ? "terus-side-nav__link active"
-                      : "terus-side-nav__link"
+              <Show>
+                <Show.When
+                  isTrue={
+                    accessControl?.role === "ADMIN" ||
+                    accessControl?.role === "MANAGER"
                   }
-                  to={"/Admin/Projects"}
                 >
-                  <i className={`bi bi-suitcase-lg`}></i>
-                  <span className="terus-sidebar__nav-text">Dự án</span>
-                </NavLink>
-              </li>
+                  <li
+                    className="terus-side-top__item"
+                    data-bs-toggle={tooltip.toggle}
+                    data-bs-placement={tooltip.placement}
+                    data-bs-content="Dự án"
+                  >
+                    <NavLink
+                      className={({ isActive, isPending }) =>
+                        isPending
+                          ? "terus-side-nav__link"
+                          : isActive
+                          ? "terus-side-nav__link active"
+                          : "terus-side-nav__link"
+                      }
+                      to={"/Admin/Projects"}
+                    >
+                      <i className={`bi bi-suitcase-lg`}></i>
+                      <span className="terus-sidebar__nav-text">Dự án</span>
+                    </NavLink>
+                  </li>
+                </Show.When>
+              </Show>
             </Show.When>
           </Show>
         </ul>

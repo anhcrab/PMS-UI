@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { AdminContext } from "../../Layouts/Admin/AdminLayout";
 import { Toast } from "bootstrap";
 
-const Notifycation = () => {
+const Notification = () => {
   const { notification } = useContext(AdminContext);
   useEffect(() => {
     Array.from(notification).forEach((message, index) => {
@@ -33,12 +33,6 @@ const Notifycation = () => {
               />
               <strong className="me-auto">{message.title}</strong>
               <small>{(new Date().getMinutes() - new Date(message.time).getMinutes()) > 0 ? `${new Date().getMinutes() - new Date(message.time).getMinutes()} phút trước` : 'Vừa xong'}</small>
-              {/* <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="toast"
-                aria-label="Close"
-              ></button> */}
             </div>
             <div className="toast-body">{message.content}</div>
           </div>
@@ -48,4 +42,4 @@ const Notifycation = () => {
   );
 };
 
-export default Notifycation;
+export default Notification;

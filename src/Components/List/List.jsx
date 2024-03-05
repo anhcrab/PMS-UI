@@ -93,7 +93,14 @@ const List = ({
                           </Show>
                           <Show>
                             <Show.When isTrue={actions.delete.isAllowed}>
-                              <i className="bi bi-trash-fill text-danger action-item"></i>
+                              <i
+                                className="bi bi-trash-fill text-danger action-item"
+                                onClick={() => {
+                                  api
+                                    .delete(`${endpoint}/${item.id}`)
+                                    .then(() => location.reload());
+                                }}
+                              ></i>
                             </Show.When>
                           </Show>
                         </div>
@@ -112,9 +119,6 @@ const List = ({
                 <button type="button" className="btn btn-outline-light">
                   <i className="bi bi-file-earmark-excel text-success"></i>{" "}
                   Sheet
-                </button>
-                <button type="button" className="btn btn-outline-light">
-                  <i className="bi bi-file-earmark-pdf text-danger"></i> PDF
                 </button>
                 <button
                   type="button"

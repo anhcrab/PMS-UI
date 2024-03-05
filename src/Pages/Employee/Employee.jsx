@@ -53,15 +53,25 @@ const Employee = () => {
     department: "",
   });
   const [reload, setReload] = useState(false);
-  const { accessControl, setNotification } = useContext(AdminContext);
+  const { accessControl, setNotification, setHeading } =
+    useContext(AdminContext);
   const [promotion, setPromotion] = useState("");
   const [demotion, setDemotion] = useState("");
+
+  useEffect(() => {
+    if (accessControl?.role === "EMPLOYEE") {
+      setHeading("Nhóm của tôi");
+    } else {
+      setHeading("Nhân sự");
+    }
+  }, []);
+
   useEffect(() => {
     setLoading(true);
     if (checkExpireToken()) location.href = "/Auth?Action=Login";
     if (accessControl?.role === "ADMIN") {
-      api.get("users").then((res) => {
-        setUsers(res.data);
+      api.get("users?limit=-1&page=1").then((res) => {
+        setUsers(res.data.items);
       });
       api.get("employees/page/" + pagination.currentPage).then((res) => {
         setEmployees(res.data?.items);
@@ -104,7 +114,7 @@ const Employee = () => {
     document.querySelectorAll(".popover").forEach((popover) => {
       popover.setAttribute("data-bs-theme", "dark");
     });
-  }, [employees])
+  }, [employees]);
 
   function handlePrint() {
     const printTarget = document.querySelector("#list-table table");
@@ -158,7 +168,7 @@ const Employee = () => {
 
   function handleEditSubmit(e) {
     e.preventDefault();
-    if (checkExpireToken()) location.href = "/Auth?Action=Login";
+    if (checkExpireToken()) location.href = "/Auth/Login";
     console.log(employee);
     api
       .put(`users/${watchId}`, employee)
@@ -194,7 +204,7 @@ const Employee = () => {
 
   function handleNewSubmit(e) {
     e.preventDefault();
-    if (checkExpireToken()) location.href = "/Auth?Action=Login";
+    if (checkExpireToken()) location.href = "/Auth/Login";
     console.log(newEmployee);
     api
       .post("employees", newEmployee)
@@ -245,17 +255,7 @@ const Employee = () => {
   return (
     <div id="terus-employee-page" className="p50" data-bs-theme="dark">
       {loading && <Loading />}
-      <h2 className="mb-3">
-        <Show>
-          <Show.When isTrue={accessControl?.role === "EMPLOYEE"}>
-            Nhóm của tôi
-          </Show.When>
-          {/* <Show.When isTrue={accessControl?.role === "MANAGER"}>
-            Nhóm của tôi
-          </Show.When> */}
-          <Show.Else>Quản lý nhân sự</Show.Else>
-        </Show>
-      </h2>
+      {/* <h2 className="mb-3">{heading}</h2> */}
       <Show>
         <Show.When isTrue={accessControl?.role !== "EMPLOYEE"}>
           <div className="card w-100 d-flex flex-row bg-transparent ps-4 pe-3 py-3 justify-content-between align-items-center">

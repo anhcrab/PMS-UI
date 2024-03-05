@@ -13,6 +13,14 @@
   --gradient-gold: #c2a160;
 }
 
+.rs-theme-dark {
+  --rs-input-bg: transparent;
+  --rs-input-focus-border: var(--gradient-gold);
+  --rs-picker-value: var(--gradient-gold);
+  --rs-listbox-option-selected-bg: #c2a1602d;
+  --rs-listbox-option-selected-text: var(--gradient-gold);
+}
+
 .highlight-1-text {
   color: var(--highlight-color-1);
 }

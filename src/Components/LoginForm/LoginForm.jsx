@@ -56,7 +56,7 @@ const LoginForm = () => {
       )}
       <div className="terus-form-container sign-in">
         <form id="sign_in_form" onSubmit={signin}>
-          <h1>Đăng Nhập</h1>
+          <h1 style={{ fontWeight: 500 }}>Đăng Nhập</h1>
           <div className="social-icons">
             <a href="#" className="icon">
               <i className="bi bi-google"></i>

@@ -6,7 +6,6 @@ import AdminLayout from "../Layouts/Admin/AdminLayout";
 import Page404 from "./Page404/Page404";
 import Dashboard from "./Dashboard/Dashboard";
 import Profile from "./Profile/Profile";
-import Logout from "../Components/Logout/Logout";
 import Settings from "./Settings/Settings";
 import Employee from "./Employee/Employee";
 import Projects from "./Project/Projects";
@@ -17,49 +16,51 @@ const router = createBrowserRouter([
     element: <ClientLayout />,
     children: [
       {
-        path: '/',
-        element: <HomePage />
+        path: "/",
+        element: <HomePage />,
       },
       {
-        path: "Auth/:action",
+        path: "Auth/*",
         element: <Auth />,
-        children: [{
-          path: 'Logout',
-          element: <Logout />
-        }]
+        children: [
+          {
+            path: ':action',
+            element: <Auth />
+          }
+        ],
       },
     ],
   },
   {
-    path: '/Admin/*',
+    path: "/Admin/*",
     element: <AdminLayout />,
     children: [
       {
-        path: 'Dashboard',
-        element: <Dashboard />
+        path: "Dashboard",
+        element: <Dashboard />,
       },
       {
-        path: 'Profile',
-        element: <Profile />
+        path: "Profile",
+        element: <Profile />,
       },
       {
         path: "Employees",
-        element: <Employee />
+        element: <Employee />,
       },
       {
         path: "Projects",
-        element: <Projects />
+        element: <Projects />,
       },
       {
-        path: 'Settings',
+        path: "Settings",
         element: <Settings />,
-      }
-    ]
+      },
+    ],
   },
   {
-    path: '*',
-    element: <Page404 />
-  }
+    path: "*",
+    element: <Page404 />,
+  },
 ]);
 
 const FullPage = () => {

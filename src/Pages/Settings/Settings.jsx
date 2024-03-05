@@ -1,28 +1,32 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import "./Settings.scss";
-import Loading from "../../Components/Loading/Loading";
+// import Loading from "../../Components/Loading/Loading";
 import SettingGeneral from "../../Components/SettingGeneral/SettingGeneral";
 import { Navigate, useSearchParams } from "react-router-dom";
 import { Show } from "../../Components/Show/Show";
-import List from "../../Components/List/List";
 import { AdminContext } from "../../Layouts/Admin/AdminLayout";
+import SettingRoles from "../../Components/SettingRoles/SettingRoles";
+import SettingUsers from "../../Components/SettingUsers/SettingUsers";
+import SettingProjectTypes from "../../Components/SettingProjectTypes/SettingProjectTypes";
 
 const Settings = () => {
-  const { accessControl } = useContext(AdminContext)
-  
+  const { accessControl, setHeading } = useContext(AdminContext);
   const [urlParams, setUrlParams] = useSearchParams();
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1 * 1000);
-  }, [urlParams]);
+    setHeading("Cài đặt");
+    if (!urlParams.has("Page")) {
+      setUrlParams({ Page: "General" });
+    }
+  }, []);
+
   return (
     <>
       <Show>
-        <Show.When isTrue={accessControl.role === 'ADMIN'}>
-          {loading && <Loading />}
-          <div id="terus-settings" data-bs-theme="dark">
+        <Show.When isTrue={accessControl.role === "ADMIN"}>
+          {/* {loading && <Loading />} */}
+          <div id="terus-settings" className="p-4" data-bs-theme="dark">
             <nav className="terus-content__nav">
               <div className="row">
                 <div className="col-lg-12">
@@ -59,6 +63,18 @@ const Settings = () => {
                     </li>
                     <li
                       className={`terus-settings__nav-items${
+                        urlParams.get("Page") === "Project-Types"
+                          ? " active"
+                          : ""
+                      }`}
+                      onClick={() => {
+                        setUrlParams({ Page: "Project-Types" });
+                      }}
+                    >
+                      <i className="bi bi-archive-fill"></i> Loại dự án
+                    </li>
+                    <li
+                      className={`terus-settings__nav-items${
                         urlParams.get("Page") === "More" ? " active" : ""
                       }`}
                       onClick={() => {
@@ -76,26 +92,22 @@ const Settings = () => {
                 <SettingGeneral />
               </Show.When>
               <Show.When isTrue={urlParams.get("Page") === "Users"}>
-                <List
-                  cols={userCols}
-                  endpoint={userEndpoint}
-                  actions={userActions}
-                />
+                <SettingUsers />
               </Show.When>
               <Show.When isTrue={urlParams.get("Page") === "Roles"}>
-                <List
-                  cols={roleCols}
-                  endpoint={roleEndpoint}
-                  actions={roleActions}
-                  config={{ export: false, pagination: false }}
-                />
+                <SettingRoles />
+              </Show.When>
+              <Show.When
+                isTrue={urlParams.get("Page") === "Project-Types"}
+              >
+                <SettingProjectTypes />
               </Show.When>
               <Show.Else>Cai dat them</Show.Else>
             </Show>
           </div>
         </Show.When>
         <Show.Else>
-          <Navigate to={'/PageNotFound'} />
+          <Navigate to={"/PageNotFound"} />
           {accessControl.role}
         </Show.Else>
       </Show>
@@ -103,76 +115,20 @@ const Settings = () => {
   );
 };
 
-const DEPARTMENT = {
-  [0]: "Không có",
-  [1]: "Phòng kinh doanh",
-  [2]: "Phòng marketing",
-  [3]: "Phòng hành chính",
-  [4]: "Phòng nhân sự",
-  [5]: "Phòng kế toán",
-};
+// const DEPARTMENT = {
+//   [0]: "Không có",
+//   [1]: "Phòng kinh doanh",
+//   [2]: "Phòng marketing",
+//   [3]: "Phòng hành chính",
+//   [4]: "Phòng nhân sự",
+//   [5]: "Phòng kế toán",
+// };
 
-const EMPLOYEESTATUS = {
-  [0]: "FREE",
-  [1]: "EMPLOYED",
-  [2]: "FIRED",
-  [3]: "RETIRED",
-};
-
-const userCols = [
-  {
-    key: "userName",
-    name: "Tên tài khoản",
-  },
-  {
-    key: "email",
-    name: "Email",
-  },
-  {
-    key: "id",
-    name: "UUID",
-  },
-];
-
-const userEndpoint = "users";
-
-const userActions = {
-  turnOn: true,
-  watch: {
-    isAllowed: true,
-  },
-  edit: {
-    isAllowed: true,
-  },
-  delete: {
-    isAllowed: true,
-  },
-};
-
-const roleCols = [
-  {
-    key: "name",
-    name: "Tên",
-  },
-  {
-    key: "id",
-    name: "Mã số Role",
-  },
-];
-
-const roleEndpoint = "roles";
-
-const roleActions = {
-  turnOn: false,
-  watch: {
-    isAllowed: false,
-  },
-  edit: {
-    isAllowed: true,
-  },
-  delete: {
-    isAllowed: false,
-  },
-};
+// const EMPLOYEESTATUS = {
+//   [0]: "FREE",
+//   [1]: "EMPLOYED",
+//   [2]: "FIRED",
+//   [3]: "RETIRED",
+// };
 
 export default Settings;

@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Dashboard.scss";
 import Loading from "../../Components/Loading/Loading";
+import { AdminContext } from "../../Layouts/Admin/AdminLayout";
 
 const Dashboard = () => {
+  const { setHeading } = useContext(AdminContext)
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    setHeading("Dashboard")
     setTimeout(() => {
       setLoading(false);
     }, 1000 * 1);
@@ -15,7 +18,6 @@ const Dashboard = () => {
       <div id="terus-dashboard">
         <div className="m-4">
           <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom ">
-            <h1 className="h2">Dashboard</h1>
             <div
               className="btn-toolbar mb-2 mb-md-0"
               style={{ height: "fit-content" }}
@@ -61,7 +63,7 @@ const Dashboard = () => {
             style={{
               display: "block",
               boxSizing: "border-box",
-              height: "577px",
+              height: "57px",
               width: "1367px",
             }}
           ></canvas>

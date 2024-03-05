@@ -19,6 +19,6 @@ export const checkExpireToken = () => {
     localStorage.removeItem('ACCESS_TOKEN')
     localStorage.removeItem('USER_ID')
     localStorage.removeItem('EXPIRATION')
-    return <Navigate to={'/Auth'} replace={true}/>
+    return <Navigate to={'/Auth/Login'} replace={true}/>
   }
 }

@@ -20,17 +20,21 @@
 }
 
 #terus-admin__body-sidebar {
-  width: 12%;
+  width: 200px;
   background-color: var(--sidebar-color);
   background-color: transparent;
   transition: width .3s ease;
 }
 
 #terus-admin__body-main {
-  width: 88%;
+  width: calc(100% - 200px);
   color: var(--dark-text-color);
   background-color: var(--bg-color);
   position: relative;
+}
+
+#terus-admin__body-main > div {
+  height: calc(100% - 50px);
 }
 
 #terus-admin :is(h1, h2, h3, h4, h5, h6) {

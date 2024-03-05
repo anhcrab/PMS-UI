@@ -66,6 +66,8 @@
 
 .terus-side-nav__link.active {
   background-color: #111;
+  text-decoration: none;
+  color: inherit;
 }
 
 .terus-side-nav__link.active i {
@@ -80,6 +82,7 @@
 .terus-side-nav__link:hover {
   color: #fff;
   transition: color .3s ease;
+  text-decoration: none;
 }
 
 #terus-admin__body-sidebar.minimized {
