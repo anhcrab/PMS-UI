@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../../Utils/api";
 import { Button, Input, Modal, Table, Tooltip, Whisper } from "rsuite";
+import { isOnMobile } from "../../Utils/utils";
 
 const SettingProjectTypes = () => {
   const [tableLoading, setTableLoading] = useState(true);
@@ -46,7 +47,7 @@ const SettingProjectTypes = () => {
 
   return (
     <div>
-      <div data-bs-theme="dark">
+      <div>
         <Button
           onClick={() => setOpenAdd(true)}
           appearance="primary"
@@ -63,7 +64,7 @@ const SettingProjectTypes = () => {
       </div>
       <Table
         height={420}
-        width={600}
+        width={isOnMobile() ? 340 : 600}
         className="rounded mt-3 projects-table"
         data={types}
         loading={tableLoading}
@@ -77,7 +78,7 @@ const SettingProjectTypes = () => {
           <HeaderCell className="fs-6 text-center">Tên</HeaderCell>
           <Cell dataKey="name" className="text-center" />
         </Column>
-        <Column width={200}>
+        <Column width={isOnMobile() ? 100 : 200}>
           <HeaderCell className="text-center fs-6">Hành động</HeaderCell>
           <Cell className="d-flex justify-content-center align-items-center text-center">
             <Whisper

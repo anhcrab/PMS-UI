@@ -26,7 +26,7 @@ import {
 import api from "../../Utils/api";
 import { utils, writeFile } from "xlsx";
 import { Show } from "../../Components/Show/Show";
-import { authenticate } from "../../Utils/utils";
+import { authenticate, isOnDesktop, isOnMobile } from "../../Utils/utils";
 import { Navigate } from "react-router-dom";
 //#endregion
 
@@ -34,7 +34,6 @@ const Projects = () => {
   const { setHeading, accessControl } = useContext(AdminContext);
   const [reload, setReload] = useState(true);
   const [projectTypes, setProjectTypes] = useState([]);
-  const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const [projects, setProjects] = useState({
     totalItems: 0,
@@ -49,6 +48,7 @@ const Projects = () => {
     paymentDate: "",
     deadline: "",
     status: "NEW",
+    members: [],
   });
   const [editProjectId, setEditProjectId] = useState(null);
   const [editProject, setEditProject] = useState({
@@ -60,6 +60,7 @@ const Projects = () => {
     paymentDate: "",
     deadline: "",
     status: "NEW",
+    members: [],
   });
   const [limit, setLimit] = useState(20);
   const [page, setPage] = useState(1);
@@ -97,17 +98,8 @@ const Projects = () => {
       .catch((err) => {
         console.log(err);
       });
-    api
-      .get("users?limit=-1&page=1")
-      .then((res) => {
-        setUsers(Array.from(res.data.items));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     const { typeId, search } = filter;
-    let endpoint = `projects?limit=${limit}&page=${page}`;
-    if (trashStatus) endpoint = `projects/trash?limit=${limit}&page=${page}`;
+    let endpoint = `projects${trashStatus ? '/trash' : ''}?limit=${limit}&page=${page}`;
     endpoint += typeId !== null && typeId !== "" ? `&typeId=${typeId}` : "";
     endpoint += search !== null && search !== "" ? `&search=${search}` : "";
     api
@@ -261,9 +253,9 @@ const Projects = () => {
           accessControl?.role == "ADMIN" || accessControl?.role === "MANAGER"
         }
       >
-        <div className="p-4" data-bs-theme="dark">
-          <div className="d-flex justify-content-between">
-            <div className="d-flex justify-content-center gap-3">
+        <div className="p-4">
+          <div className={`d-flex ${isOnMobile() ? "flex-column align-items-start gap-3 " : 'justify-content-between'}`}>
+            <div className={`d-flex ${isOnMobile() ? 'flex-column' : ''} justify-content-center gap-3`}>
               <Button
                 onClick={() => setOpen(true)}
                 appearance="primary"
@@ -345,7 +337,7 @@ const Projects = () => {
                 </Show.When>
               </Show>
             </div>
-            <div className="d-flex gap-3 justify-content-center align-items-center">
+            <div className={`d-flex ${isOnMobile() ? 'flex-column w-100' : 'align-items-center'} justify-content-center gap-3`}>
               <SelectPicker
                 name="filterByTypeId"
                 onChange={(value) =>
@@ -402,126 +394,367 @@ const Projects = () => {
               </InputGroup>
             </div>
           </div>
-          <Table
-            height={420}
-            className="rounded mt-3 projects-table"
-            data={projects.items}
-            loading={tableLoading}
-            autoHeight={true}
-          >
-            <Column width={56} fixed>
-              <HeaderCell className="text-center">
-                <Checkbox
-                  style={{
-                    top: "-7px",
-                    "--rs-checkbox-checked-bg": "var(--rs-gray-100)",
-                  }}
-                  value={"all"}
-                  checked={multipleChoices.checkedAll}
-                  onChange={handleCheckAll}
-                  indeterminate={multipleChoices.indeterminate}
-                />
-              </HeaderCell>
-              <Cell className="text-center">
-                {(rowdata) => (
-                  <Checkbox
-                    name="trashId"
-                    value={rowdata.id}
-                    style={{
-                      top: "-7px",
-                      "--rs-checkbox-checked-bg": "var(--rs-gray-100)",
-                    }}
-                    checked={multipleChoices.list.some(
-                      (item) => item === rowdata.id
+          <Show>
+            <Show.When isTrue={accessControl?.role === "ADMIN"}>
+              <Table
+                id="table_projects_admin"
+                height={420}
+                className="rounded mt-3 projects-table"
+                style={{ "--rs-table-resize": "var(--gradient-gold)", boxShadow: '0 0 2px #ccc' }}
+                data={projects.items}
+                loading={tableLoading}
+                autoHeight={true}
+              >
+                <Column width={56} fixed>
+                  <HeaderCell className="text-center">
+                    <Checkbox
+                      style={{
+                        top: "-7px",
+                        "--rs-checkbox-checked-bg": "var(--rs-gray-500)",
+                      }}
+                      value={"all"}
+                      checked={multipleChoices.checkedAll}
+                      onChange={handleCheckAll}
+                      indeterminate={multipleChoices.indeterminate}
+                    />
+                  </HeaderCell>
+                  <Cell className="text-center">
+                    {(rowdata) => (
+                      <Checkbox
+                        name="trashId"
+                        value={rowdata.id}
+                        style={{
+                          top: "-7px",
+                          "--rs-checkbox-checked-bg": "var(--rs-gray-500)",
+                        }}
+                        checked={multipleChoices.list.some(
+                          (item) => item === rowdata.id
+                        )}
+                        onChange={handleCheck}
+                      />
                     )}
-                    onChange={handleCheck}
-                  />
-                )}
-              </Cell>
-            </Column>
-            <Column width={200} fixed resizable>
-              <HeaderCell className="fs-6">Tên</HeaderCell>
-              <Cell className="terus-column__pj-name">
-                {(rowdata) => (
-                  <span
-                    className="w-100 h-100 d-flex justify-content-between"
-                    onClick={() => {
-                      setEditModal(true);
-                      setEditProjectId(rowdata.id);
+                  </Cell>
+                </Column>
+                <Column width={200} fixed={isOnDesktop()} resizable>
+                  <HeaderCell className="fs-6">Tên</HeaderCell>
+                  <Cell className="terus-column__pj-name">
+                    {(rowdata) => (
+                      <span
+                        className="w-100 h-100 d-flex justify-content-between"
+                        onClick={() => {
+                          setEditModal(true);
+                          setEditProjectId(rowdata.id);
+                        }}
+                      >
+                        {rowdata.name + " "}
+                        <i className="bi bi-pencil-fill"></i>
+                      </span>
+                    )}
+                  </Cell>
+                </Column>
+                <Column width={200} resizable>
+                  <HeaderCell className="fs-6">Loại dự án</HeaderCell>
+                  <Cell>
+                    {(rowdata) => {
+                      const type = projectTypes.find(
+                        (type) => type.id === rowdata.typeId
+                      );
+                      return type.name;
                     }}
-                  >
-                    {rowdata.name + " "}
-                    <i className="bi bi-pencil-fill"></i>
-                  </span>
-                )}
-              </Cell>
-            </Column>
-            <Column width={200} resizable>
-              <HeaderCell className="fs-6">Loại dự án</HeaderCell>
-              <Cell>
-                {(rowdata) => {
-                  const type = projectTypes.find(
-                    (type) => type.id === rowdata.typeId
-                  );
-                  return type.name;
-                }}
-              </Cell>
-            </Column>
-            <Column width={200} resizable>
-              <HeaderCell className="fs-6">Kinh phí</HeaderCell>
-              <Cell>{(rowdata) => `${toThousands(rowdata.budget)} VNĐ`}</Cell>
-            </Column>
-            <Column width={150} resizable>
-              <HeaderCell className="text-center fs-6">Trạng thái</HeaderCell>
-              <Cell className="text-center">
-                {(rowdata) => statusComponent(rowdata.status)}
-              </Cell>
-            </Column>
-            <Column width={150} resizable>
-              <HeaderCell className="text-center fs-6">Tiến độ</HeaderCell>
-              <Cell className="text-center">
-                {(rowdata) =>
-                  rowdata.progress === "" ? "0%" : rowdata.progress + "%"
-                }
-              </Cell>
-            </Column>
-            <Column flexGrow={1} resizable>
-              <HeaderCell className="fs-6">Người phụ trách</HeaderCell>
-              <Cell>
-                {(rowdata) => {
-                  const employee =
-                    employees &&
-                    employees.find(
-                      (employee) => employee.id === rowdata.responsibleId
-                    );
-                  return employee.lastName + " " + employee.firstName;
-                }}
-              </Cell>
-            </Column>
-            <Column flexGrow={1} resizable>
-              <HeaderCell className="text-center fs-6">
-                Ngày thanh toán
-              </HeaderCell>
-              <Cell className="text-center">
-                {(rowdata) =>
-                  new Date(rowdata.paymentDate).toLocaleDateString("vi")
-                }
-              </Cell>
-            </Column>
-            <Column flexGrow={1} resizable>
-              <HeaderCell className="text-center fs-6">
-                Ngày hoàn thành
-              </HeaderCell>
-              <Cell className="text-center">
-                {(rowdata) =>
-                  new Date(rowdata.deadline).toLocaleDateString("vi")
-                }
-              </Cell>
-            </Column>
-          </Table>
+                  </Cell>
+                </Column>
+                <Column width={200} resizable>
+                  <HeaderCell className="fs-6">Kinh phí</HeaderCell>
+                  <Cell>
+                    {(rowdata) => `${toThousands(rowdata.budget)} VNĐ`}
+                  </Cell>
+                </Column>
+                <Column width={150} resizable>
+                  <HeaderCell className="text-center fs-6">Trạng thái</HeaderCell>
+                  <Cell className="text-center">
+                    {(rowdata) => statusComponent(rowdata.status)}
+                  </Cell>
+                </Column>
+                <Column width={150} resizable>
+                  <HeaderCell className="text-center fs-6">Tiến độ</HeaderCell>
+                  <Cell className="text-center">
+                    {(rowdata) =>
+                      rowdata.progress === "" ? "0%" : rowdata.progress + "%"
+                    }
+                  </Cell>
+                </Column>
+                <Column flexGrow={1} resizable>
+                  <HeaderCell className="fs-6">Người phụ trách</HeaderCell>
+                  <Cell>
+                    {(rowdata) => {
+                      const employee =
+                        employees &&
+                        employees.find(
+                          (employee) => employee.id === rowdata.responsibleId
+                        );
+                      return employee?.lastName + " " + employee?.firstName;
+                    }}
+                  </Cell>
+                </Column>
+                <Column flexGrow={1} resizable>
+                  <HeaderCell className="text-center fs-6">
+                    Ngày thanh toán
+                  </HeaderCell>
+                  <Cell className="text-center">
+                    {(rowdata) =>
+                      new Date(rowdata.paymentDate).toLocaleDateString("vi")
+                    }
+                  </Cell>
+                </Column>
+                <Column flexGrow={1} resizable>
+                  <HeaderCell className="text-center fs-6">
+                    Ngày hoàn thành
+                  </HeaderCell>
+                  <Cell className="text-center">
+                    {(rowdata) =>
+                      new Date(rowdata.deadline).toLocaleDateString("vi")
+                    }
+                  </Cell>
+                </Column>
+              </Table>
+            </Show.When>
+            <Show.When isTrue={accessControl?.role === "MANAGER"}>
+              <Table
+                id="table_projects_admin"
+                height={420}
+                className="rounded mt-3 projects-table"
+                style={{ "--rs-table-resize": "var(--gradient-gold)", boxShadow: '0 0 2px #ccc' }}
+                data={projects.items}
+                loading={tableLoading}
+                autoHeight={true}
+              >
+                <Column width={56} fixed>
+                  <HeaderCell className="text-center">
+                    <Checkbox
+                      style={{
+                        top: "-7px",
+                        "--rs-checkbox-checked-bg": "var(--rs-gray-500)",
+                      }}
+                      value={"all"}
+                      checked={multipleChoices.checkedAll}
+                      onChange={handleCheckAll}
+                      indeterminate={multipleChoices.indeterminate}
+                    />
+                  </HeaderCell>
+                  <Cell className="text-center">
+                    {(rowdata) => (
+                      <Checkbox
+                        name="trashId"
+                        value={rowdata.id}
+                        style={{
+                          top: "-7px",
+                          "--rs-checkbox-checked-bg": "var(--rs-gray-500)",
+                        }}
+                        checked={multipleChoices.list.some(
+                          (item) => item === rowdata.id
+                        )}
+                        onChange={handleCheck}
+                      />
+                    )}
+                  </Cell>
+                </Column>
+                <Column width={200} fixed={isOnDesktop()} resizable>
+                  <HeaderCell className="fs-6">Tên</HeaderCell>
+                  <Cell className="terus-column__pj-name">
+                    {(rowdata) => (
+                      <span
+                        className="w-100 h-100 d-flex justify-content-between"
+                        onClick={() => {
+                          setEditModal(true);
+                          setEditProjectId(rowdata.id);
+                        }}
+                      >
+                        {rowdata.name + " "}
+                        <i className="bi bi-pencil-fill"></i>
+                      </span>
+                    )}
+                  </Cell>
+                </Column>
+                <Column width={200} resizable>
+                  <HeaderCell className="fs-6">Loại dự án</HeaderCell>
+                  <Cell>
+                    {(rowdata) => {
+                      const type = projectTypes.find(
+                        (type) => type.id === rowdata.typeId
+                      );
+                      return type.name;
+                    }}
+                  </Cell>
+                </Column>
+                <Column width={150} resizable>
+                  <HeaderCell className="text-center fs-6">
+                    Trạng thái
+                  </HeaderCell>
+                  <Cell className="text-center">
+                    {(rowdata) => statusComponent(rowdata.status)}
+                  </Cell>
+                </Column>
+                <Column width={150} resizable>
+                  <HeaderCell className="text-center fs-6">Tiến độ</HeaderCell>
+                  <Cell className="text-center">
+                    {(rowdata) =>
+                      rowdata.progress === "" ? "0%" : rowdata.progress + "%"
+                    }
+                  </Cell>
+                </Column>
+                <Column flexGrow={1} resizable>
+                  <HeaderCell className="fs-6">Người phụ trách</HeaderCell>
+                  <Cell>
+                    {(rowdata) => {
+                      const employee =
+                        employees &&
+                        employees.find(
+                          (employee) => employee.id === rowdata.responsibleId
+                        );
+                      return employee?.lastName + " " + employee?.firstName;
+                    }}
+                  </Cell>
+                </Column>
+                <Column flexGrow={1} resizable>
+                  <HeaderCell className="text-center fs-6">
+                    Ngày thanh toán
+                  </HeaderCell>
+                  <Cell className="text-center">
+                    {(rowdata) =>
+                      new Date(rowdata.paymentDate).toLocaleDateString("vi")
+                    }
+                  </Cell>
+                </Column>
+                <Column flexGrow={1} resizable>
+                  <HeaderCell className="text-center fs-6">
+                    Ngày hoàn thành
+                  </HeaderCell>
+                  <Cell className="text-center">
+                    {(rowdata) =>
+                      new Date(rowdata.deadline).toLocaleDateString("vi")
+                    }
+                  </Cell>
+                </Column>
+              </Table>
+            </Show.When>
+            <Show.When isTrue={accessControl?.role === "EMPLOYEE"}>
+              <Table
+                id="table_projects_admin"
+                height={420}
+                className="rounded mt-3 projects-table"
+                style={{ "--rs-table-resize": "var(--gradient-gold)", boxShadow: '0 0 2px #ccc' }}
+                data={projects.items}
+                loading={tableLoading}
+                autoHeight={true}
+              >
+                <Column width={56} fixed>
+                  <HeaderCell className="text-center">
+                    <Checkbox
+                      style={{
+                        top: "-7px",
+                        "--rs-checkbox-checked-bg": "var(--rs-gray-500)",
+                      }}
+                      value={"all"}
+                      checked={multipleChoices.checkedAll}
+                      onChange={handleCheckAll}
+                      indeterminate={multipleChoices.indeterminate}
+                    />
+                  </HeaderCell>
+                  <Cell className="text-center">
+                    {(rowdata) => (
+                      <Checkbox
+                        name="trashId"
+                        value={rowdata.id}
+                        style={{
+                          top: "-7px",
+                          "--rs-checkbox-checked-bg": "var(--rs-gray-500)",
+                        }}
+                        checked={multipleChoices.list.some(
+                          (item) => item === rowdata.id
+                        )}
+                        onChange={handleCheck}
+                      />
+                    )}
+                  </Cell>
+                </Column>
+                <Column width={200} fixed resizable>
+                  <HeaderCell className="fs-6">Tên</HeaderCell>
+                  <Cell className="terus-column__pj-name">
+                    {(rowdata) => (
+                      <span
+                        className="w-100 h-100 d-flex justify-content-between"
+                        onClick={() => {
+                          setEditModal(true);
+                          setEditProjectId(rowdata.id);
+                        }}
+                      >
+                        {rowdata.name + " "}
+                        <i className="bi bi-pencil-fill"></i>
+                      </span>
+                    )}
+                  </Cell>
+                </Column>
+                <Column width={200} resizable>
+                  <HeaderCell className="fs-6">Loại dự án</HeaderCell>
+                  <Cell>
+                    {(rowdata) => {
+                      const type = projectTypes.find(
+                        (type) => type.id === rowdata.typeId
+                      );
+                      return type.name;
+                    }}
+                  </Cell>
+                </Column>
+                <Column width={150} resizable>
+                  <HeaderCell className="text-center fs-6">Tiến độ</HeaderCell>
+                  <Cell className="text-center">
+                    {(rowdata) =>
+                      rowdata.progress === "" ? "0%" : rowdata.progress + "%"
+                    }
+                  </Cell>
+                </Column>
+                <Column flexGrow={1} resizable>
+                  <HeaderCell className="fs-6">Người phụ trách</HeaderCell>
+                  <Cell>
+                    {(rowdata) => {
+                      const employee =
+                        employees &&
+                        employees.find(
+                          (employee) => employee.id === rowdata.responsibleId
+                        );
+                      return (
+                        employee && employee?.lastName + " " + employee?.firstName
+                      );
+                    }}
+                  </Cell>
+                </Column>
+                <Column flexGrow={1} resizable>
+                  <HeaderCell className="text-center fs-6">
+                    Ngày thanh toán
+                  </HeaderCell>
+                  <Cell className="text-center">
+                    {(rowdata) =>
+                      new Date(rowdata.paymentDate).toLocaleDateString("vi")
+                    }
+                  </Cell>
+                </Column>
+                <Column flexGrow={1} resizable>
+                  <HeaderCell className="text-center fs-6">
+                    Ngày hoàn thành
+                  </HeaderCell>
+                  <Cell className="text-center">
+                    {(rowdata) =>
+                      new Date(rowdata.deadline).toLocaleDateString("vi")
+                    }
+                  </Cell>
+                </Column>
+              </Table>
+            </Show.When>
+            <Show.Else></Show.Else>
+          </Show>
           <div
-            className="p-2 rounded mt-3 px-3 d-flex justify-content-between"
-            style={{ background: "var(--rs-bg-card)" }}
+            className={`p-2 rounded mt-3 px-3 d-flex justify-content-between ${isOnMobile() ? 'flex-column align-items-start gap-3' : ''}`}
+            style={{ background: "var(--rs-bg-card)", boxShadow: '0 0 2px #ccc' }}
           >
             <div className="d-flex gap-3 justify-content-center align-items-center">
               <Whisper
@@ -572,7 +805,7 @@ const Projects = () => {
               boundaryLinks
               maxButtons={10}
               size="md"
-              layout={["limit", "|", "pager"]}
+              layout={["limit", "pager"]}
               total={projects.totalItems}
               activePage={page}
               onChangePage={setPage}
@@ -587,6 +820,7 @@ const Projects = () => {
                 "--rs-btn-ghost-active-border": "var(--gradient-gold)",
                 "--rs-btn-ghost-active-text": "var(--gradient-gold)",
               }}
+              className={`${isOnMobile() ? 'flex-column align-items-start gap-3' : ''}`}
             />
           </div>
 
@@ -594,7 +828,6 @@ const Projects = () => {
             open={open}
             onClose={() => setOpen(false)}
             backdrop="static"
-            // overflow={true}
           >
             <form id="new_project_form" onSubmit={handleNewProjectSubmit}>
               <Drawer.Header>
@@ -697,7 +930,7 @@ const Projects = () => {
                       }}
                       label="Người phụ trách"
                       data={Array.from(employees).map((item) => ({
-                        label: item.lastName + " " + item.firstName,
+                        label: item?.lastName + " " + item?.firstName,
                         value: item.id,
                       }))}
                       className="bg-transparent"
@@ -752,10 +985,16 @@ const Projects = () => {
                     <TagPicker
                       placeholder="thành viên"
                       placement="topStart"
+                      onChange={(value) => {
+                        setNewProject({
+                          ...newProject,
+                          members: value,
+                        });
+                      }}
                       className="w-100"
                       data={Array.from(employees).map((e) => ({
-                        label: `${e.lastName} ${e.firstName}`,
-                        value: e.id,
+                        label: `${e?.lastName} ${e?.firstName}`,
+                        value: e?.id,
                       }))}
                     />
                   </div>
@@ -808,6 +1047,7 @@ const Projects = () => {
               </Drawer.Body>
             </form>
           </Drawer>
+
           <Modal
             open={editModal}
             onClose={() => {
@@ -821,6 +1061,7 @@ const Projects = () => {
               style={{ overflow: "hidden" }}
               onSubmit={(e) => {
                 e.preventDefault();
+                console.log(editProject);
                 api
                   .put(`projects/${editProjectId}`, editProject)
                   .then((res) => {
@@ -921,7 +1162,7 @@ const Projects = () => {
                   </div>
                   <div className="col-lg-8">
                     <InlineEdit
-                      placeholder="Loại dự án"
+                      placeholder="Người phụ trách"
                       value={editProject.responsibleId}
                       onChange={(value) => {
                         setEditProject({
@@ -933,9 +1174,9 @@ const Projects = () => {
                       <SelectPicker
                         name="responsibleId"
                         size="lg"
-                        data={Array.from(users).map((item) => ({
-                          label: item.lastName + " " + item.firstName,
-                          value: item.id,
+                        data={Array.from(employees).map((item) => ({
+                          label: item?.lastName + " " + item?.firstName,
+                          value: item?.id,
                         }))}
                         block
                       />
@@ -1006,21 +1247,30 @@ const Projects = () => {
                   </div>
                 </div>
                 <div className="row mt-3">
-                  <div className="col-12">
+                  <div className="col-lg-4">
                     <div className="fs-7 fw-normal m-0 mb-3">Thành viên</div>
-                    <InlineEdit>
-                    <div className="col-12">
-                    <h6 className="mb-3 fw-normal">Thành viên dự án:</h6>
-                    <TagPicker
-                      placeholder="thành viên"
-                      placement="topStart"
-                      className="w-100"
-                      data={Array.from(employees).map((e) => ({
-                        label: `${e.lastName} ${e.firstName}`,
-                        value: e.id,
-                      }))}
-                    />
                   </div>
+                  <div className="col-lg-8">
+                    <InlineEdit
+                      className="w-100"
+                      value={editProject.members}
+                      onChange={(value) => {
+                        setEditProject({
+                          ...editProject,
+                          members: value,
+                        });
+                      }}
+                      placeholder="Chọn thành viên"
+                    >
+                      <TagPicker
+                        placeholder="thành viên"
+                        placement="topStart"
+                        className="w-100"
+                        data={Array.from(employees).map((e) => ({
+                          label: `${e?.lastName} ${e?.firstName}`,
+                          value: e?.id,
+                        }))}
+                      />
                     </InlineEdit>
                   </div>
                 </div>

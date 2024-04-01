@@ -1,6 +1,7 @@
 import { Table } from "rsuite";
 import api from "../../Utils/api";
 import { useEffect, useState } from "react";
+import { isOnDesktop } from "../../Utils/utils";
 
 const SettingRoles = () => {
   const [roles, setRoles] = useState([]);
@@ -23,11 +24,12 @@ const SettingRoles = () => {
     <div>
       <Table
         height={420}
-        width={800}
+        width={isOnDesktop() ? 800 : 340}
         className="rounded mt-3"
         data={roles}
         loading={loading}
-        autoHeight={true}
+        autoHeight
+        style={{ boxShadow: '0 0 4px #ccc' }}
       >
         <Column width={56} fixed>
           <HeaderCell className="text-center fs-6">#</HeaderCell>

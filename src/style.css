@@ -1,8 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
 :root {
-  --sidebar-color: #24262d;
-  --bg-color: #2f323b;
+  --sidebar-color: #f9f9f9;
+  --sidebar-primary-color: #28282a;
+  --sidebar-secondary-color: #3c3a45;
+  --sidebar-subtle-color: #a09cab;
+  --sidebar-highlight-color: #8d746c;
+  --bg-color: #f5f8fa;
   --light-text-color: #000;
   --dark-text-color: #949ba2;
+  --light-heading-color: #000;
   --dark-heading-color: #fff;
   --section-bg-color: rgba(68, 70, 79, 0.5);
   --highlight-color-1: #bfa40a;
@@ -13,12 +27,20 @@
   --gradient-gold: #c2a160;
 }
 
-.rs-theme-dark {
+.rs-theme-dark, .rs-theme-light {
   --rs-input-bg: transparent;
   --rs-input-focus-border: var(--gradient-gold);
   --rs-picker-value: var(--gradient-gold);
-  --rs-listbox-option-selected-bg: #c2a1602d;
+  /* --rs-listbox-option-selected-bg: #c2a1602d; */
   --rs-listbox-option-selected-text: var(--gradient-gold);
+}
+
+.highlight-1:hover {
+  color: var(--highlight-color-1) !important;
+}
+
+.highlight-2:hover {
+  color: var(--highlight-color-2) !important;
 }
 
 .highlight-1-text {
@@ -45,14 +67,13 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  /* border-radius: 4px; */
   background-color: #fff;
 }
 
 .terus-section {
   width: 100%;
-  padding: 50px;
-  background-color: var(--section-bg-color);
+  /* padding: 2rem; */
+  /* background-color: var(--section-bg-color); */
   border-radius: 12px;
 }
 
@@ -91,7 +112,7 @@
 }
 
 #terus-admin th {
-  color: var(--dark-heading-color);
+  /* color: var(--dark-heading-color); */
   font-weight: bold;
 }
 

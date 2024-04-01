@@ -3,7 +3,7 @@ import FullPage from "./Pages/FullPage";
 
 function App() {
   return (
-    <CustomProvider theme="dark">
+    <CustomProvider theme="light">
       <FullPage />
     </CustomProvider>
   );

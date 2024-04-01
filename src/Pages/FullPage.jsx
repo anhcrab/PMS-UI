@@ -9,6 +9,7 @@ import Profile from "./Profile/Profile";
 import Settings from "./Settings/Settings";
 import Employee from "./Employee/Employee";
 import Projects from "./Project/Projects";
+import Task from "./Task/Task";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "Projects",
         element: <Projects />,
+      },
+      {
+        path: "Tasks",
+        element: <Task />,
       },
       {
         path: "Settings",

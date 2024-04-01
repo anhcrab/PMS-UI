@@ -3,6 +3,7 @@ import "./Profile.scss";
 import Loading from "../../Components/Loading/Loading";
 import api from "../../Utils/api";
 import { AdminContext } from "../../Layouts/Admin/AdminLayout";
+import { Panel } from "rsuite";
 
 const Profile = () => {
   const { setHeading } = useContext(AdminContext)
@@ -56,13 +57,12 @@ const Profile = () => {
       {loading && <Loading />}
       {user && (
         <div id="terus-profile-page">
-          <div className="row p50">
-            {/* <h1 className="col-lg-12 text-start">Hồ sơ cá nhân</h1> */}
-            <div className="col-lg-9 fl-g3 h-full">
-              <section className="terus-section">
+          <div className="row p-3">
+            <div className="col-lg-9 fl-g3 h-full mb-3">
+              <Panel shaded className="border">
                 <form
-                  className="row needs-validation"
-                  data-bs-theme="dark"
+                  className="needs-validation"
+                  // data-bs-theme="dark"
                   onSubmit={handleSubmit}
                 >
                   <div className="row">
@@ -268,17 +268,17 @@ const Profile = () => {
                     </div>
                   </div>
                 </form>
-              </section>
+              </Panel>
             </div>
             <div className="col-lg-3">
-              <section className="terus-section sticky-top">
+              <Panel shaded className="border sticky-top">
                 <div className="row">
                   <i className="bi bi-person-square terus-user-avatar center"></i>
                   <h2 className="center">{user.userName}</h2>
                   <small className="text-center">{role}</small>
                   <p>{user.description}</p>
                 </div>
-              </section>
+              </Panel>
             </div>
           </div>
         </div>

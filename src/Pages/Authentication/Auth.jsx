@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import LoginForm from "../../Components/LoginForm/LoginForm";
-import SignUpForm from "../../Components/SignUpForm/SignUpForm";
+// import SignUpForm from "../../Components/SignUpForm/SignUpForm";
 import "./Auth.scss";
 import { Link, useParams } from "react-router-dom";
 import { authenticate } from "../../Utils/utils";
@@ -37,7 +37,7 @@ const Auth = () => {
             }`}
             id="container"
           >
-            <SignUpForm />
+            {/* <SignUpForm /> */}
             <LoginForm />
             <div className="terus-toggle-container">
               <div className="terus-toggle">
@@ -53,7 +53,7 @@ const Auth = () => {
                   <Link
                     to={"../Auth/Login"}
                     className="hidden button highlight-2 fw-normal"
-                    style={{ textDecoration: 'none' }}
+                    style={{ textDecoration: "none" }}
                     id="login"
                   >
                     Đăng Nhập
@@ -62,17 +62,16 @@ const Auth = () => {
                 <div className="terus-toggle-panel terus-toggle-right">
                   <h1 className="fw-normal">Xin chào!</h1>
                   <p>
-                    Đăng ký tài khoản mới để sử dụng tất cả các tính năng của
-                    Terus
+                    Đăng nhập ngay để sử dụng tất cả các tính năng của Terus
                   </p>
-                  <Link
+                  {/* <Link
                     to={"../Auth/Register"}
                     className="hidden button highlight-1"
                     style={{ textDecoration: 'none' }}
                     id="register"
                   >
                     Đăng ký
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>

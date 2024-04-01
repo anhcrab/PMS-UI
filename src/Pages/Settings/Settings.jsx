@@ -26,7 +26,7 @@ const Settings = () => {
       <Show>
         <Show.When isTrue={accessControl.role === "ADMIN"}>
           {/* {loading && <Loading />} */}
-          <div id="terus-settings" className="p-4" data-bs-theme="dark">
+          <div id="terus-settings" className="p-4">
             <nav className="terus-content__nav">
               <div className="row">
                 <div className="col-lg-12">

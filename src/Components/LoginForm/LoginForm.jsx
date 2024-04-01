@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { NavLink, Navigate } from "react-router-dom";
-import { githubLogin } from "../../Utils/OAuth";
 import api from "../../Utils/api";
 import AuthLoading from "../AuthLoading/AuthLoading";
 
@@ -56,8 +55,8 @@ const LoginForm = () => {
       )}
       <div className="terus-form-container sign-in">
         <form id="sign_in_form" onSubmit={signin}>
-          <h1 style={{ fontWeight: 500 }}>Đăng Nhập</h1>
-          <div className="social-icons">
+          <h1 className="mb-3" style={{ fontWeight: 500 }}>Đăng Nhập</h1>
+          {/* <div className="social-icons">
             <a href="#" className="icon">
               <i className="bi bi-google"></i>
             </a>
@@ -70,7 +69,7 @@ const LoginForm = () => {
             <a href="#" className="icon">
               <i className="bi bi-linkedin"></i>
             </a>
-          </div>
+          </div> */}
           <span>hoặc đăng nhập với email và mật khẩu</span>
           <input
             name="email"

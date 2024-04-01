@@ -1,4 +1,3 @@
-import { Popover } from "bootstrap";
 import { Children, useEffect } from "react";
 
 export const Show = (props) => {
@@ -13,22 +12,7 @@ export const Show = (props) => {
     }
   });
 
-  useEffect(() => {
-    const popoverTriggerList = document.querySelectorAll(
-      '[data-bs-toggle="popover"]'
-    );
-    [...popoverTriggerList].map(
-      (popoverTriggerEl) => new Popover(popoverTriggerEl)
-    );
-    document.querySelectorAll(".popover").forEach((popover) => {
-      popover.setAttribute("data-bs-theme", "dark");
-    });
-    return () => {
-      document.querySelectorAll(".popover").forEach((popover) => {
-        popover.remove();
-      });
-    };
-  }, []);
+  useEffect(() => {}, []);
 
   return when || otherwise;
 };

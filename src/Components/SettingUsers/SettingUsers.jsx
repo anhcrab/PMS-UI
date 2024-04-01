@@ -17,7 +17,7 @@ import {
 } from "rsuite";
 import { Show } from "../Show/Show";
 import api from "../../Utils/api";
-import { authenticate } from "../../Utils/utils";
+import { authenticate, isOnDesktop, isOnMobile } from "../../Utils/utils";
 
 const SettingUsers = () => {
   const [reload, setReload] = useState(false);
@@ -138,9 +138,9 @@ const SettingUsers = () => {
   }
 
   return (
-    <div data-bs-theme="dark" style={{ overflow: "hidden" }}>
-      <div className="d-flex justify-content-between">
-        <div className="d-flex justify-content-center gap-3">
+    <div style={{ overflow: "hidden", overflowY: 'auto' }}>
+      <div className={`d-flex ${isOnMobile() ? 'flex-column align-items-start gap-3 ' : ''}justify-content-between`}>
+        <div className={`d-flex ${isOnMobile() ? 'flex-column align-items-start ' : ''}justify-content-between gap-3`}>
           <Button
             onClick={() => {
               setOpenAdd(true);
@@ -217,7 +217,7 @@ const SettingUsers = () => {
             </Show.When>
           </Show>
         </div>
-        <div className="d-flex gap-3 justify-content-center align-items-center">
+        <div className={`d-flex gap-3 ${isOnMobile() ? 'flex-column ' : 'align-items-center '}justify-content-center`}>
           <SelectPicker
             name="filterByTypeId"
             onChange={(value) =>
@@ -279,6 +279,10 @@ const SettingUsers = () => {
         data={users.items}
         className="rounded mt-3"
         loading={tableLoading}
+        autoHeight
+        style={{
+          boxShadow: '0 0 2px #ccc'
+        }}
       >
         <Column width={56} fixed>
           <HeaderCell className="text-center">
@@ -309,7 +313,7 @@ const SettingUsers = () => {
             )}
           </Cell>
         </Column>
-        <Column width={150} fixed>
+        <Column width={150} fixed={isOnDesktop()}>
           <HeaderCell className="fs-6">Tên tài khoản</HeaderCell>
           <Cell className="terus-column__pj-name">
             {(rowdata) => (
@@ -344,9 +348,10 @@ const SettingUsers = () => {
         </Column>
       </Table>
       <div
-        className="p-2 rounded mt-3 px-3 d-flex flex-row justify-content-between"
+        className={`p-2 rounded mt-3 px-3 d-flex flex-${isOnMobile() ? 'column gap-2 align-items-start' : 'row'} justify-content-between`}
         style={{
           background: "var(--rs-bg-card)",
+          boxShadow: '0 0 4px #ccc'
         }}
       >
         <div className="d-flex gap-3 justify-content-center align-items-center">
@@ -389,7 +394,7 @@ const SettingUsers = () => {
           boundaryLinks
           maxButtons={10}
           size="md"
-          layout={["limit", "|", "pager"]}
+          layout={["limit", "pager"]}
           total={1}
           activePage={1}
           // onChangePage={setPage}
@@ -404,6 +409,7 @@ const SettingUsers = () => {
             "--rs-btn-ghost-active-border": "var(--gradient-gold)",
             "--rs-btn-ghost-active-text": "var(--gradient-gold)",
           }}
+          className={`${isOnMobile() ? 'flex-column align-items-start gap-3' : ''}`}
         />
       </div>
 

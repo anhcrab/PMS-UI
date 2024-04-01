@@ -10,6 +10,7 @@
 .terus-settings__navigation {
   list-style-type: none;
   display: flex;
+  flex-wrap: wrap;
   padding: 0;
   gap: 20px;
 }
@@ -19,20 +20,23 @@
   padding: 7px 14px;
   border-radius: 5px;
   transition: background-color .3s ease;
+  box-shadow: 0 0 3px #ccc;
 }
 
 .terus-settings__nav-items:hover {
   background-color: var(--section-bg-color);
+  color: #fff;
   transition: background-color .3s ease;
 }
 
 .terus-settings__nav-items.active {
-  background-color: rgba($color: #fff, $alpha: 0.15);
+  background-color: var(--section-bg-color);
+  box-shadow: 0 0 4px #bbb;
   color: #fff;
 }
 
 .terus-settings__nav-items.active i {
-  color: var(--gradient-gold);
+  color: var(--highlight-color-2);
 }
 
 .terus-settings__submenu {
@@ -51,26 +55,17 @@
   border-bottom-right-radius: 5px;
 }
 
-// .modules {
-//   position: relative;
-// }
-
-// .modules:hover {
-//   border-bottom-left-radius: 0;
-//   border-bottom-right-radius: 0;
-// }
-
-// .modules:hover .terus-settings__submenu {
-//   display: block;
-//   animation: settingSubmenu .3s ease;
-// }
-
 .terus-settings__submenu:hover {
   display: block;
 }
 
 .terus-settings__submenu li:hover {
   background-color: rgba($color: #fff, $alpha: .2);
+}
+
+#terus-settings ::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 3px;
 }
 
 .terus-settings__submenu li {

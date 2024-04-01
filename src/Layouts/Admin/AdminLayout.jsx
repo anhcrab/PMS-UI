@@ -2,23 +2,18 @@ import { Outlet } from "react-router-dom";
 import HeaderAdmin from "../../Components/HeaderAdmin/HeaderAdmin";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import "./AdminLayout.scss";
-import { authenticate } from "../../Utils/utils";
+import { authenticate, isOnMobile } from "../../Utils/utils";
 import { createContext, useEffect, useState } from "react";
 import AdminLoading from "../../Components/AdminLoading/AdminLoading";
-import Notification from "../../Components/Notification/Notification";
+// import Notification from "../../Components/Notification/Notification";
 import api from "../../Utils/api";
 import { Show } from "../../Components/Show/Show";
-// import Avatar1 from '../../assets/imgs/Avatar1.svg';
-// import Avatar2 from '../../assets/imgs/Avatar2.svg';
-// import Avatar3 from '../../assets/imgs/Avatar3.svg';
-// import Avatar4 from '../../assets/imgs/Avatar4.svg';
-// import Avatar5 from '../../assets/imgs/Avatar5.svg';
-// import Avatar6 from '../../assets/imgs/Avatar6.svg';
 
 export const AdminContext = createContext();
 
 const AdminLayout = () => {
   const [loading, setLoading] = useState(true);
+  const  [minimize, setMinimize] = useState(isOnMobile());
   const [notification, setNotification] = useState([
     {
       status: "show",
@@ -62,17 +57,25 @@ const AdminLayout = () => {
               setAccessControl,
               heading,
               setHeading,
+              minimize,
+              setMinimize
             }}
           >
             <div id="terus-admin">
-              <div id="terus-admin__top">
-                <HeaderAdmin />
-              </div>
-              <div id="terus-admin__body">
-                <Sidebar />
+              <div onClick={() => {
+                setMinimize(!minimize)
+              }} className={`terus-sidebar-backdrop ${minimize ? 'minimized' : ''}`}></div>
+              <Sidebar />
+              <div id="terus-admin__body" className={minimize ? 'minimized' : ''}>
+                <div id="terus-admin__body-top">
+                  <HeaderAdmin />
+                </div>
                 <main id="terus-admin__body-main">
                   <Outlet />
-                  <div className="w-100 text-end px-4" style={{ height: "50px" }}>
+                  <div
+                    className="w-100 text-end px-4"
+                    style={{ height: "50px" }}
+                  >
                     © 2024, Made by{" "}
                     <a
                       href="https://terusvn.com"
@@ -82,7 +85,7 @@ const AdminLayout = () => {
                     </a>
                   </div>
                 </main>
-                <Notification />
+                {/* <Notification /> */}
               </div>
             </div>
           </AdminContext.Provider>

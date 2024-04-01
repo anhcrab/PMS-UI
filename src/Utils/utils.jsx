@@ -22,3 +22,11 @@ export const checkExpireToken = () => {
     return <Navigate to={'/Auth/Login'} replace={true}/>
   }
 }
+
+export const isOnDesktop = () => {
+  return window.innerWidth > 768;
+}
+
+export const isOnMobile = () => {
+  return window.innerWidth <= 768;
+}

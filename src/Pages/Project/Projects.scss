@@ -24,3 +24,25 @@
   visibility: visible;
   font-size: 14px;
 }
+
+.rs-drawer-left.rs-drawer-sm,
+.rs-drawer-right.rs-drawer-sm {
+  width: 100vw !important;
+}
+
+.rs-drawer-body {
+  padding: 20px !important;
+}
+
+@media screen and (min-width: 786px) {
+
+  .rs-drawer-left.rs-drawer-sm,
+  .rs-drawer-right.rs-drawer-sm {
+    width: 600px !important;
+  }
+
+  .rs-drawer-body {
+    padding: 30px 60px;
+    position: relative;
+  }
+}
